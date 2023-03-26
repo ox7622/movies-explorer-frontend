@@ -52,11 +52,12 @@ html {
 .hover-button:hover {
   background-color: var(--button-accent);
   color: var(--text-color);
+  box-shadow: 2px 2px 2px 2px var(--promo-color);
+  border: 0;
   transition: all .3s ease-in;
 }
 
 .hover-opacity:hover {
-
   opacity: 0.6;
   transition: opacity .3s ease-in;
 }
