@@ -1,0 +1,53 @@
+.login-reg-form {
+    width: 396px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0;
+}
+
+@media screen and (max-width:568px) {
+    .login-reg-form {
+        max-width: 300px;
+    }
+}
+
+.input-div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 20px 0;
+
+}
+
+.input__field {
+    border: 0;
+    background-color: var(--button-grey);
+    line-height: 46px;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+.input__field:focus {
+    outline-color: var(--button-accent);
+}
+
+.input__label {
+    width: 100%;
+    color: var(--text-grey);
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.input__error {
+    color: var(--text-error);
+    font-size: 10px;
+    margin: -10px 0 0 0;
+}
+
+.login-reg-form__logo {
+    margin: 10vh 0 0 0;
+}

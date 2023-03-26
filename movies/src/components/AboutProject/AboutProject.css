@@ -1,0 +1,125 @@
+.about-project {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.about-project__articles {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 568px) {
+    .about-project__articles {
+        flex-direction: column;
+    }
+
+}
+
+.about-project__article {
+    width: 49%;
+    box-sizing: border-box;
+    padding-right: 35px;
+}
+
+@media screen and (max-width: 568px) {
+    .about-project__article {
+        width: 100%;
+        padding: 0;
+    }
+
+}
+
+.article__title {
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: -.06rem;
+}
+
+@media screen and (max-width: 568px) {
+    .article__title {
+        margin: 30px 0 10px 0;
+    }
+
+}
+
+.article__text {
+    font-size: 14px;
+    line-height: 1.42;
+
+}
+
+@media screen and (max-width: 568px) {
+    .article__text {
+        margin: 10px 0 40px 0;
+    }
+
+}
+
+.about-project__timeline {
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    padding: 120px 0 70px 0;
+    grid-template:
+        "a b"
+        "c d" 36px /1fr 4fr;
+}
+
+
+@media screen and (max-width: 568px) {
+    .about-project__timeline {
+        padding: 30px 0;
+        grid-template:
+            "a b"
+            "c d" 35px /1fr 3fr;
+    }
+}
+
+
+.about-project__timeline_1week {
+    background-color: var(--button-color);
+    color: var(--text-accent);
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.about-project__timeline_4weeks {
+    background-color: #f2f2f2;
+    color: var(--text-color);
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.about-project__timeline_block {
+    background-color: transparent;
+    color: #A0A0A0;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 500;
+    margin: 0;
+    padding: 10px 0;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+}

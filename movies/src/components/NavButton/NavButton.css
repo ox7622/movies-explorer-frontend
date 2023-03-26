@@ -1,0 +1,31 @@
+.nav-button {
+    background-color: transparent;
+    position: absolute;
+    font-size: 12px;
+    border-radius: 3px;
+    border: 1px solid var(--button-color);
+    padding: 0;
+    line-height: 36px;
+    width: 129px;
+    bottom: 50px;
+}
+
+
+@media screen and (max-width: 960px) {
+    .nav-button {
+
+        margin: 0 auto;
+        bottom: 30vh;
+        left: 50%;
+        transform: translatex(-50%);
+    }
+
+}
+
+
+@media screen and (max-width: 568px) {
+    .nav-button {
+        bottom: 50%;
+    }
+
+}

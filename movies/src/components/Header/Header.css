@@ -1,0 +1,164 @@
+.header {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.header_promo {
+    background-color: var(--promo-color);
+}
+
+.header__block {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 25px 70px;
+    align-items: center;
+}
+
+
+
+@media screen and (max-width: 568px) {
+    .header__block {
+        padding: 20px 10px;
+    }
+
+}
+
+@media screen and (max-width: 960px) {
+    .header__block {
+        padding: 16px 16px;
+    }
+
+}
+
+.header__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 1080px) {
+    .header__links {
+        padding: 0;
+        margin: 0;
+    }
+
+}
+
+.header__links_desktop {
+    visibility: visible;
+    opacity: 1;
+
+}
+
+@media screen and (max-width: 960px) {
+    .header__links_desktop {
+        display: none;
+    }
+
+}
+
+.header__links_mobile {
+    visibility: hidden;
+    opacity: 0;
+    width: 0;
+
+}
+
+.header__links_mobile_visible {
+    visibility: visible;
+    opacity: 1;
+    margin: 0 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    border: 1px;
+    height: 100vh;
+    width: 75vw;
+}
+
+
+@media screen and (min-width: 961px) {
+    .header__links_mobile_visible {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+}
+
+.header__link {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.33;
+    margin: 0 0 0 24px;
+}
+
+.header__link_signin {
+    padding: 10px 20px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.14;
+    color: white;
+    background-color: var(--button-color);
+}
+
+.header__link_account {
+    background-color: var(--button-grey);
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.14;
+    margin: 0 0 0 50px;
+}
+
+.header__link_saved-films {
+    font-weight: 400;
+}
+
+
+@media screen and (max-width: 578px) {
+    .header__link {
+        line-height: 2;
+    }
+
+}
+
+.header__logo {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+}
+
+.header__burger-menu {
+    background-image: url(../../images/burger-menu.svg);
+    width: 80%;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: 0;
+    background-position: right;
+    cursor: pointer;
+}
+
+.header__burger-menu:hover {
+    background-color: var(--button-accent);
+    width: 40px;
+}
+
+@media screen and (min-width: 961px) {
+    .header__burger-menu {
+        visibility: hidden;
+        opacity: 0;
+        width: 0;
+    }
+
+}
