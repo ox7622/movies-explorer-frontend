@@ -21,6 +21,13 @@
     align-items: baseline;
 }
 
+@media screen and (max-width: 568px) {
+
+    .form__container_type_login,
+    .form__container_type_register {
+        align-items: center;
+    }
+}
 
 
 .form__title {
@@ -44,6 +51,8 @@
     background-color: var(--button-color);
     color: var(--text-accent);
     width: 100%;
+    border-radius: 3px;
+    border: 0;
 }
 
 .form__submit_type_profile {

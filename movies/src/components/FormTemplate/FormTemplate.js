@@ -3,7 +3,7 @@ import './FormTemplate.css';
 function FormTemplate({ name, onSubmit, setButtonState, buttonTitle, title, children, link, linkText, text, }) {
 
     return (
-        <form className='form' name={`${name}`} onSubmit={onSubmit} noValidate >
+        <form className='form' name={`${name}`} onSubmit={onSubmit}  >
             <div className={`form__container form__container_type_${name}`}>
                 <h2 className={`form__title form__title_type_${name}`}>{title}</h2>
                 {children}

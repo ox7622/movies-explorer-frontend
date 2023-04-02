@@ -6,6 +6,22 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    padding: 70px 70px 40px 70px;
+}
+
+
+@media screen and (max-width: 960px) {
+    .about-project {
+        padding: 40px;
+    }
+
+}
+
+@media screen and (max-width: 568px) {
+    .about-project {
+        padding: 16px;
+    }
+
 }
 
 .about-project__articles {
@@ -21,14 +37,23 @@
 
 }
 
-.about-project__article {
-    width: 49%;
+.article {
+    width: 51%;
     box-sizing: border-box;
-    padding-right: 35px;
+    margin-right: 35px;
 }
 
+
+@media screen and (max-width: 960px) {
+    .article {
+        margin-right: 20px;
+    }
+
+}
+
+
 @media screen and (max-width: 568px) {
-    .about-project__article {
+    .article {
         width: 100%;
         padding: 0;
     }
@@ -39,11 +64,12 @@
     font-size: 20px;
     font-weight: 400;
     letter-spacing: -.06rem;
+    margin: 20px 0 30px 0;
 }
 
 @media screen and (max-width: 568px) {
     .article__title {
-        margin: 30px 0 10px 0;
+        margin: 5px 0;
     }
 
 }
@@ -54,35 +80,53 @@
 
 }
 
-@media screen and (max-width: 568px) {
+@media screen and (max-width: 960px) {
     .article__text {
-        margin: 10px 0 40px 0;
+        font-size: 12px;
+        line-height: 1.5;
     }
 
 }
 
-.about-project__timeline {
+@media screen and (max-width: 568px) {
+    .article__text {
+        font-size: 11px;
+        line-height: 1.45;
+        margin: 10px 0 50px 0;
+    }
+
+}
+
+.timeline {
     width: 100%;
     box-sizing: border-box;
     display: grid;
-    padding: 120px 0 70px 0;
+    padding: 90px 0 70px 0;
     grid-template:
         "a b"
         "c d" 36px /1fr 4fr;
 }
 
 
-@media screen and (max-width: 568px) {
-    .about-project__timeline {
-        padding: 30px 0;
-        grid-template:
-            "a b"
-            "c d" 35px /1fr 3fr;
+@media screen and (max-width: 960px) {
+    .timeline {
+        padding: 80px 0 40px;
+
     }
 }
 
 
-.about-project__timeline_1week {
+@media screen and (max-width: 568px) {
+    .timeline {
+        padding: 20px 0 50px;
+        grid-template:
+            "a b"
+            "c d" 30px /100px auto;
+    }
+}
+
+
+.timeline__1week {
     background-color: var(--button-color);
     color: var(--text-accent);
     font-size: 14px;
@@ -96,7 +140,16 @@
     display: table-cell;
 }
 
-.about-project__timeline_4weeks {
+
+
+@media screen and (max-width: 568px) {
+    .timeline__1week {
+        font-size: 11px;
+    }
+}
+
+
+.timeline__4weeks {
     background-color: #f2f2f2;
     color: var(--text-color);
     font-size: 14px;
@@ -110,7 +163,15 @@
     display: table-cell;
 }
 
-.about-project__timeline_block {
+
+@media screen and (max-width: 568px) {
+    .timeline__4week {
+        font-size: 11px;
+    }
+}
+
+
+.timeline__text {
     background-color: transparent;
     color: #A0A0A0;
     width: 100%;
@@ -122,4 +183,11 @@
     text-align: center;
     vertical-align: middle;
     display: table-cell;
+}
+
+
+@media screen and (max-width: 568px) {
+    .timeline__text {
+        font-size: 11px;
+    }
 }

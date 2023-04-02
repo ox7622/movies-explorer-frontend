@@ -10,19 +10,20 @@
 
 @media screen and (max-width: 960px) {
     .about-me {
+        padding-top: 44px;
         column-gap: 50px
     }
 
 }
 
-@media screen and (max-width: 568px) {
+@media screen and (max-width: 590px) {
     .about-me {
         grid-template-areas:
             "a"
             "c"
             "b";
+        justify-items: center;
     }
-
 }
 
 .about-me__header {
@@ -33,21 +34,30 @@
     grid-area: b;
 }
 
+
 .about-me__name {
     padding: 10px 0;
     margin: 0;
     line-height: 1.16;
     font-weight: 400;
     font-size: 50px;
-    letter-spacing: -.06rem;
+    letter-spacing: -.09rem;
 }
 
+
+@media screen and (max-width: 960px) {
+    .about-me__name {
+        font-size: 40px;
+        padding: 15px 0 0 0;
+    }
+
+}
 
 
 @media screen and (max-width: 568px) {
     .about-me__name {
         font-size: 30px;
-        padding: 40px 0 0 0;
+        padding: 45px 0 0 0;
     }
 
 }
@@ -99,6 +109,7 @@
 @media screen and (max-width: 568px) {
     .about-me__text {
         font-size: 11px;
+        line-height: 1.45;
         margin: 0;
     }
 
@@ -110,6 +121,7 @@
     width: 270px;
     height: 327px;
     border-radius: 10px;
+    padding-top: 10px;
 }
 
 
@@ -122,6 +134,16 @@
     }
 
 }
+
+
+@media screen and (max-width: 590px) {
+    .about-me__photo {
+        width: 80%;
+        height: 100%;
+    }
+
+}
+
 
 @media screen and (max-width: 568px) {
     .about-me__photo {
@@ -139,9 +161,16 @@
 }
 
 
+@media screen and (max-width: 960px) {
+    .about-me__github {
+        margin: 70px 0 20px;
+    }
+
+}
+
 @media screen and (max-width: 568px) {
     .about-me__github {
-        margin: 40px 0 30px 0;
+        margin: 40px 0;
     }
 
 }

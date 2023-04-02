@@ -23,7 +23,7 @@
 
 @media screen and (max-width: 568px) {
     .header__block {
-        padding: 20px 10px;
+        padding: 20px 7px;
     }
 
 }
@@ -100,6 +100,9 @@
     margin: 0 0 0 24px;
 }
 
+
+
+
 .header__link_signin {
     padding: 10px 20px;
     border-radius: 3px;
@@ -110,6 +113,16 @@
     background-color: var(--button-color);
 }
 
+
+@media screen and (max-width: 568px) {
+    .header__link_signin {
+        font-size: 10px;
+        line-height: 1.6;
+        padding: 5px 10px;
+    }
+
+}
+
 .header__link_account {
     background-color: var(--button-grey);
     border-radius: 20px;
@@ -117,7 +130,7 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 1.14;
-    margin: 0 0 0 50px;
+    margin: 0 0 0 70px;
 }
 
 .header__link_saved-films {
@@ -140,18 +153,13 @@
 
 .header__burger-menu {
     background-image: url(../../images/burger-menu.svg);
-    width: 80%;
+    width: 24px;
     height: 24px;
     background-repeat: no-repeat;
     background-color: transparent;
     border: 0;
-    background-position: right;
+    background-position: center;
     cursor: pointer;
-}
-
-.header__burger-menu:hover {
-    background-color: var(--button-accent);
-    width: 40px;
 }
 
 @media screen and (min-width: 961px) {

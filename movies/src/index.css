@@ -40,7 +40,7 @@ html {
 }
 
 .section {
-  padding: 70px;
+  padding: 40px 70px 75px 70px;
   box-sizing: border-box;
 }
 
@@ -73,7 +73,7 @@ html {
 
 @media screen and (max-width: 960px) {
   .section {
-    padding: 44px;
+    padding: 40px;
 
   }
 

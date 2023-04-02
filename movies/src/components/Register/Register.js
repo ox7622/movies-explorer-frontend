@@ -14,7 +14,7 @@ function Register() {
             link="/signin"
             linkText="Войти"
             text="Уже зарегистрированы? ">
-            <div className='input-div' >
+            <div className='input' >
                 <label className='input__label' htmlFor='name-input' >Имя</label>
                 <input className='input__field'
                     name='name'
@@ -26,7 +26,7 @@ function Register() {
                     maxLength={30}
                     minLength={2}
                 /></div>
-            <div className='input-div input_no-border' >
+            <div className='input input_no-border' >
                 <label className='input__label' htmlFor='email-input' >E-mail</label>
                 <input className='input__field'
                     name='email'
@@ -37,7 +37,7 @@ function Register() {
                     required
                 /></div>
 
-            <div className='input-div' >
+            <div className='input' >
                 <label className='input__label' htmlFor='password-input' >Пароль</label>
                 <input className='input__field'
                     name='password'

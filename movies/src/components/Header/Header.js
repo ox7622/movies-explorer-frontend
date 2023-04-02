@@ -25,7 +25,7 @@ function Header() {
                     <div className='header__block'>
                         <Link to={'/'}><img src={logo} className="header__logo hover-opacity" alt="лого проекта" /></Link>
                         {!mainPage &&
-                            (<button className="header__burger-menu hover-opacity" type='button' onClick={handleNavOpen} />)}
+                            (<button className="header__burger-menu hover-opacity hover-button" type='button' onClick={handleNavOpen} />)}
                         <ul className={`header__links ${mainPage ? "" : "header__links_desktop"}`}>
                             {(moviesPage || savedMoviesPage || profilePage) &&
                                 (<><li><Link to={'/movies'} className={`link header__link hover-link hover-opacity ${moviesPage && "link_selected"}`}>Фильмы</Link></li>

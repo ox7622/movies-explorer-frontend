@@ -13,7 +13,7 @@ function Navigation({ children, isOpen, handleClick }) {
                 <li className="nav__list-item"><Link to={'/'} onClick={handleClick} className='link nav__link  hover-link hover-opacity'> Главная </Link></li>
                 {children}
             </ul>
-            <Link to={'/profile'} onClick={handleClick} className="link nav__link  nav__link_account hover-button">Аккаунт</Link>
+            <Link to={'/profile'} onClick={handleClick} className="link nav__link nav__link_account hover-button">Аккаунт</Link>
         </div>
     </nav>
     )

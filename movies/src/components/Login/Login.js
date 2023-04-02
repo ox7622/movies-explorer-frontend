@@ -14,7 +14,7 @@ function Login() {
             link="/signup"
             linkText="Регистрация"
             text="Ещё не зарегистрированы? ">
-            <div className='input-div input_no-border' >
+            <div className='input input_no-border' >
                 <label className='input__label' htmlFor='email-input' >E-mail</label>
                 <input className='input__field'
                     name='email'
@@ -24,7 +24,7 @@ function Login() {
                     placeholder="Ваш email"
                     required
                 /></div>
-            <div className='input-div' >
+            <div className='input' >
                 <label className='input__label' htmlFor='password-input' >Пароль</label>
                 <input className='input__field'
                     name='password'
