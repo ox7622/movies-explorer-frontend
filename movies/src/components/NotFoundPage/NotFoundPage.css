@@ -1,0 +1,28 @@
+.not-found-page {
+    height: 100vh;
+    display: grid;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+
+.not-found-page__header {
+    font-size: 140px;
+    font-weight: 400;
+    margin: 0 0 20px 0;
+
+}
+
+
+.not-found-page__text {
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.not-found-page__button {
+    background-color: transparent;
+    border: 0;
+    font-size: 14px;
+    font-weight: 400;
+}

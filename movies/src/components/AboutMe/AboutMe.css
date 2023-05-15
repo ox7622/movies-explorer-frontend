@@ -1,0 +1,176 @@
+.about-me {
+    width: 100%;
+    display: grid;
+    grid-template-areas:
+        "a a"
+        "b c";
+    column-gap: 200px
+}
+
+
+@media screen and (max-width: 960px) {
+    .about-me {
+        padding-top: 44px;
+        column-gap: 50px
+    }
+
+}
+
+@media screen and (max-width: 590px) {
+    .about-me {
+        grid-template-areas:
+            "a"
+            "c"
+            "b";
+        justify-items: center;
+    }
+}
+
+.about-me__header {
+    grid-area: a;
+}
+
+.about-me__content {
+    grid-area: b;
+}
+
+
+.about-me__name {
+    padding: 10px 0;
+    margin: 0;
+    line-height: 1.16;
+    font-weight: 400;
+    font-size: 50px;
+    letter-spacing: -.09rem;
+}
+
+
+@media screen and (max-width: 960px) {
+    .about-me__name {
+        font-size: 40px;
+        padding: 15px 0 0 0;
+    }
+
+}
+
+
+@media screen and (max-width: 568px) {
+    .about-me__name {
+        font-size: 30px;
+        padding: 45px 0 0 0;
+    }
+
+}
+
+.about-me__title {
+    padding: 10px 0;
+    margin: 0;
+    line-height: 1.11;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 960px) {
+    .about-me__title {
+        line-height: 1.5;
+        font-size: 12px;
+
+    }
+
+}
+
+
+@media screen and (max-width: 568px) {
+    .about-me__title {
+        font-size: 11px;
+        padding: 20px 0;
+    }
+
+}
+
+
+.about-me__text {
+    line-height: 1.57;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+
+
+@media screen and (max-width: 960px) {
+    .about-me__text {
+        line-height: 1.5;
+        font-size: 12px;
+    }
+
+}
+
+
+@media screen and (max-width: 568px) {
+    .about-me__text {
+        font-size: 11px;
+        line-height: 1.45;
+        margin: 0;
+    }
+
+}
+
+
+.about-me__photo {
+    grid-area: c;
+    width: 270px;
+    height: 327px;
+    border-radius: 10px;
+    padding-top: 10px;
+}
+
+
+
+@media screen and (max-width: 960px) {
+    .about-me__photo {
+        width: 255px;
+        height: 307px;
+
+    }
+
+}
+
+
+@media screen and (max-width: 590px) {
+    .about-me__photo {
+        width: 80%;
+        height: 100%;
+    }
+
+}
+
+
+@media screen and (max-width: 568px) {
+    .about-me__photo {
+        width: 100%;
+        height: 100%;
+    }
+
+}
+
+.about-me__github {
+    display: block;
+    margin: 100px 0 0 0;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+
+@media screen and (max-width: 960px) {
+    .about-me__github {
+        margin: 70px 0 20px;
+    }
+
+}
+
+@media screen and (max-width: 568px) {
+    .about-me__github {
+        margin: 40px 0;
+    }
+
+}
