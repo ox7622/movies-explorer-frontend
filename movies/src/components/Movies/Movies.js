@@ -1,14 +1,34 @@
-
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
-
 import './Movies.css';
 
-function Movies() {
+
+function Movies({ movies,
+    moviesLimit,
+    onMoviesSearch,
+    isSearchDone,
+    onShortSwitch,
+    checked,
+    handleMore,
+    input,
+    error,
+    handleLikeClick,
+}) {
 
     return (<>
-        <SearchForm />
-        <MoviesCardList cards={[1, 2, 3, 4, 5, 6, 7, 8]} />
+        <SearchForm onSubmit={onMoviesSearch}
+            onSwitch={onShortSwitch}
+            checked={checked}
+            error={error}
+            input={input}
+        />
+        <MoviesCardList movies={movies}
+            moviesLimit={moviesLimit}
+            isSearchDone={isSearchDone}
+            handleMore={handleMore}
+            handleLikeClick={handleLikeClick}
+
+        />
     </>
     )
 }

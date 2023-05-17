@@ -1,12 +1,34 @@
 
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import './SavedMovies.css';
-import SearchForm from '../SearchForm/SearchForm';
-function SavedMovies() {
+import SearchForm from '../SearchForm/SearchForm'
+import { useState } from 'react';
+function SavedMovies({
+    movies,
+    moviesLimit,
+    savedMovies,
+    onMoviesSearch,
+    isSearchDone,
+    onShortSwitch,
+    error,
+    handleLikeClick,
+}) {
+
+
 
     return (<>
-        <SearchForm />
-        <MoviesCardList cards={[1, 2, 3]} />
+        <SearchForm
+            onSubmit={onMoviesSearch}
+            onSwitch={onShortSwitch}
+            error={error}
+        />
+        <MoviesCardList
+            movies={movies}
+            moviesLimit={moviesLimit}
+            savedMovies={savedMovies}
+            isSearchDone={isSearchDone}
+            handleLikeClick={handleLikeClick}
+        />
 
     </>
     )

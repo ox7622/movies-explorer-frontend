@@ -6,7 +6,9 @@ function Navigation({ children, isOpen, handleClick }) {
 
 
     const burgerMenu = width < 768;
-    return (<nav className={`nav ${isOpen ? "nav_open" : ""} ${burgerMenu ? "nav_mobile" : "nav_desktop"} `}>
+
+    return (
+    <div className={`nav-div ${isOpen ? 'nav-div_open' : ""}`}><nav className={`nav ${isOpen ? "nav_open" : ""} ${burgerMenu ? "nav_mobile" : "nav_desktop"} `}>
         <button className="nav__close hover-button" type="button" onClick={handleClick} ></button>
         <div className="nav__container">
             <ul className="nav__links">
@@ -16,6 +18,7 @@ function Navigation({ children, isOpen, handleClick }) {
             <Link to={'/profile'} onClick={handleClick} className="link nav__link nav__link_account hover-button">Аккаунт</Link>
         </div>
     </nav>
+    </div>
     )
 }
 export default Navigation;

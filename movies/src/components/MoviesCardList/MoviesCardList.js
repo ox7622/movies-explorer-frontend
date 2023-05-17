@@ -1,19 +1,28 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { useLocation } from 'react-router-dom';
-function MoviesCardList({ cards, AllMovies }) {
+
+function MoviesCardList({ movies, moviesLimit, savedMovies, handleLikeClick, handleMore, isSearchDone }) {
     const location = useLocation();
     const moviesPage = (location.pathname === '/movies');
+    const savedMoviesPage = (location.pathname === '/saved-movies');
+
+
     return (
         <section className='section movie-cards'>
-            <ul className='movie-cards__list'>
-                {cards.map(item => (<MoviesCard key={item.MovieId} />))}
-            </ul>
-            {moviesPage &&
-                (<button className='movies__more hover-button' type="button" aria-label="еще">Ещё</button>)}
+
+
+            {((isSearchDone > 0 && movies === undefined && moviesPage) || (savedMoviesPage && savedMovies === undefined)) && (<p className=''>Ничего не найдено</p>)}
+
+            {(<><p className=''>Найдено фильмов -  {(savedMoviesPage ? savedMovies.length : movies.length)}</p>
+                <ul className='movie-cards__list' >
+                    {(savedMoviesPage ? savedMovies : moviesLimit).map(item => (<MoviesCard key={`${moviesPage ? item.id : item._id}`} movie={item} handleLikeClick={handleLikeClick} />))}
+                </ul></>)}
+
+            {(moviesPage && (movies.length > moviesLimit.length)) &&
+                (<button className='movies__more hover-button' type="button" aria-label="еще" onClick={handleMore}>Ещё</button>)}
         </section>
     )
 }
-
 
 export default MoviesCardList;

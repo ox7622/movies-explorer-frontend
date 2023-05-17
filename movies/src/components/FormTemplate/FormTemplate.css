@@ -55,14 +55,26 @@
     border: 0;
 }
 
+.form__submit:focus {
+    outline-color: var(--button-accent);
+}
+
+.form__submit_disabled {
+    background-color: var(--button-grey);
+    color: var(--text-color);
+    width: 200px;
+}
+
 .form__submit_type_profile {
     font-size: 13px;
-    background-color: transparent;
+    background-color: var(--button-color);
     border: 0;
-    color: var(--text-color);
+    color: var(--text-accent);
     width: 200px;
     padding: 0;
 }
+
+
 
 .buttons {
     width: 100%;
@@ -81,12 +93,14 @@
 
 .link-under-button {
     font-size: 14px;
+    line-height: 25px;
 }
 
 .link-under-button_type_profile {
 
     color: var(--text-error);
     font-size: 13px;
+
 
 }
 
