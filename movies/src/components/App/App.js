@@ -381,7 +381,7 @@ const App = () => {
     const checkedStatus = JSON.parse(window.localStorage.getItem('checked'));
     const moviesInitial = JSON.parse(window.localStorage.getItem('savedMoviesInitial'));
 
-    if (input.length > 0) {
+    if (input) {
 
       setInputText(input);
 
@@ -391,7 +391,7 @@ const App = () => {
     }
 
     myMoviesApi.getMoviesData().then(data => {
-      console.log(data, 'savedMovies');
+
       window.localStorage.setItem('savedMovies', JSON.stringify(data));
       getSavedMovies([...data]);
 
