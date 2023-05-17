@@ -26,7 +26,7 @@ function Profile({ onSubmit, message, error, onLogout }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(values);
+    
         onSubmit({ name: values.name, email: values.email });
     }
 

@@ -98,8 +98,8 @@ class Api {
 }
 
 export const myMoviesApi = new Api({
-    //url: "https://api.mox.nomoredomains.work",
-    url: 'http://localhost:3001',
+    url: "https://api.mox.nomoredomains.work",
+    //url: 'http://localhost:3001',
     headers: {
         "Content-Type": "application/json",
         'Origin': 'localhost:3000',
