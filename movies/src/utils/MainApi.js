@@ -102,7 +102,7 @@ export const myMoviesApi = new Api({
     //url: 'http://localhost:3001',
     headers: {
         "Content-Type": "application/json",
-        'Origin': 'localhost:3000',
+        'Origin': 'https://mox.nomoredomains.work',
         'Accept': 'application/json',
     }
 
