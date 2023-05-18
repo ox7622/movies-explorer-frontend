@@ -1,9 +1,8 @@
 
 import './App.css';
 import { UserContext } from '../../contexts/User';
-import { SavedMoviesContext } from '../../contexts/SavedMovies';
 import Main from '../Main/Main';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import Movies from '../Movies/Movies.js';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -22,7 +21,6 @@ import useViewport from '../../hooks/useViewport';
 const App = () => {
   const location = useLocation();
   const moviesPage = (location.pathname === '/movies');
-  const savedMoviesPage = (location.pathname === '/saved-movies');
 
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -146,7 +144,7 @@ const App = () => {
     getInitialMovies();
     getSavedMoviesData();
 
-  }, [loggedIn]);
+  }, []);
 
 
   const handleProfileChange = useCallback(async (data) => {
@@ -198,7 +196,6 @@ const App = () => {
 
 
   const handleSearchMovies = useCallback(async function (input) {
-    // window.localStorage.setItem('moviesFiltered', JSON.stringify([]));
 
     try {
       setLoading(true);
@@ -272,17 +269,14 @@ const App = () => {
 
 
   const handleDurationFilterMovies = useCallback(() => {
-    //let data = JSON.parse(window.localStorage.getItem('moviesFiltered'));
+
     let data = movies;
     const moviesAll = JSON.parse(window.localStorage.getItem('moviesSearched'));
 
-
-    // setSearchDone(false);
     if (checked) {
       data = moviesAll;
       setChecked(false);
       window.localStorage.setItem('checked', JSON.stringify(false));
-      // window.localStorage.setItem('moviesFiltered', JSON.stringify(data));
     } else {
       data = durationFilter(movies);
       setChecked(true);
@@ -290,7 +284,6 @@ const App = () => {
 
     }
     window.localStorage.setItem('moviesShortFilter', JSON.stringify(data));
-    // window.localStorage.setItem('checked', JSON.stringify(checked));
 
     getMovies(data);
     cardsLayotAdjust(data);
@@ -303,25 +296,19 @@ const App = () => {
 
 
   const handleDurationFilterSaved = useCallback(() => {
-    //let data = JSON.parse(window.localStorage.getItem('moviesFiltered'));
+
     let data = savedMovies;
 
     const moviesAll = JSON.parse(window.localStorage.getItem('savedMovies'));
 
-    // setSearchDone(false);
     if (checked) {
       data = moviesAll;
       setChecked(false);
-      // getMovies(data);
 
-      // window.localStorage.setItem('moviesFiltered', JSON.stringify(data));
     } else {
       data = durationFilter(savedMovies);
-
       setChecked(true);
-      //  getMovies(data);
 
-      //window.localStorage.setItem('moviesFiltered', JSON.stringify(data));
     }
     window.localStorage.setItem('moviesShortFilterSaved', JSON.stringify(data));
     getSavedMovies(data);
@@ -471,55 +458,53 @@ const App = () => {
   return (
     <div className='app'>
       <UserContext.Provider value={currentUser}>
-        <SavedMoviesContext.Provider value={savedMovies}>
-          {isLoading && <Preloader />}
-          <Header loggedIn={loggedIn} />
-          <main>
-            <Routes>
+        {isLoading && <Preloader />}
+        <Header loggedIn={loggedIn} />
+        <main>
+          <Routes>
 
-              <Route path='movies' element={
-                <RequireAuth redirectTo='/signin'>
-                  <Movies
-                    movies={movies}
-                    moviesLimit={moviesLimit}
-                    input={inputText}
-                    isSearchDone={searchDone}
-                    onShortSwitch={handleDurationFilterMovies}
-                    checked={checked}
-                    error={error}
-                    handleLikeClick={handleLikeClick}
-                    handleMore={handleMore}
-                    onMoviesSearch={handleSearchMovies}
+            <Route path='movies' element={
+              <RequireAuth redirectTo='/signin'>
+                <Movies
+                  movies={movies}
+                  moviesLimit={moviesLimit}
+                  input={inputText}
+                  isSearchDone={searchDone}
+                  onShortSwitch={handleDurationFilterMovies}
+                  checked={checked}
+                  error={error}
+                  handleLikeClick={handleLikeClick}
+                  handleMore={handleMore}
+                  onMoviesSearch={handleSearchMovies}
 
-                  />
-                </RequireAuth>
-              } />
-              <Route path='saved-movies' element={
-                <RequireAuth redirectTo='/signin'>
-                  <SavedMovies
-                    savedMovies={savedMovies}
-                    onMoviesSearch={handleSearchSaved}
-                    handleLikeClick={handleLikeClick}
-                    isSearchDone={searchDone}
-                    onShortSwitch={handleDurationFilterSaved}
-                    error={error}
+                />
+              </RequireAuth>
+            } />
+            <Route path='saved-movies' element={
+              <RequireAuth redirectTo='/signin'>
+                <SavedMovies
+                  savedMovies={savedMovies}
+                  onMoviesSearch={handleSearchSaved}
+                  handleLikeClick={handleLikeClick}
+                  isSearchDone={searchDone}
+                  onShortSwitch={handleDurationFilterSaved}
+                  error={error}
 
-                  />
-                </RequireAuth>} />
-              <Route path='profile' element={
-                <RequireAuth redirectTo='/signin'>
-                  <Profile onSubmit={handleProfileChange} error={error} message={message} loggedIn={loggedIn} onLogout={signoutUser} />
-                </RequireAuth>
-              } />
-              <Route path='/' element={<Main />} />
-              <Route path='signin' element={<Login error={error} message={message} onLogin={signinUser} isLoggedIn={loggedIn} />} />
-              <Route path='signup' element={<Register onRegister={signupUser} error={error} isRegistered={regSuccess} />} />
-              <Route path='*' element={<NotFoundPage />} />
-            </Routes>
+                />
+              </RequireAuth>} />
+            <Route path='profile' element={
+              <RequireAuth redirectTo='/signin'>
+                <Profile onSubmit={handleProfileChange} error={error} message={message} loggedIn={loggedIn} onLogout={signoutUser} />
+              </RequireAuth>
+            } />
+            <Route path='/' element={<Main />} />
+            <Route path='signin' element={<Login error={error} message={message} onLogin={signinUser} isLoggedIn={loggedIn} />} />
+            <Route path='signup' element={<Register onRegister={signupUser} error={error} isRegistered={regSuccess} />} />
+            <Route path='*' element={<NotFoundPage />} />
+          </Routes>
 
-          </main>
-          <Footer />
-        </SavedMoviesContext.Provider>
+        </main>
+        <Footer />
       </UserContext.Provider>
     </div >
 
