@@ -122,7 +122,7 @@ const App = () => {
       }
       const user = await myMoviesApi.checkToken(jwt);
       if (user) {
-
+        console.log('token exists');
         setLoggedIn(true);
         setCurrentUser(user);
         setMessage('Вы успешно вошли')

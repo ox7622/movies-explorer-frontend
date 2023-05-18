@@ -80,7 +80,10 @@ class Api {
     checkToken(token) {
         return fetch(`${this.url}/users/me`, {
             method: 'GET',
-            headers: this.headers,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
             credentials: 'include',
         }).then(this._checkResponse);
 
