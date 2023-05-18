@@ -36,7 +36,7 @@ function Register({ onRegister, isRegistered, error }) {
             onSubmit={handleSubmit}>
             <div className='input' >
                 <label className='input__label' htmlFor='name-input' >Имя</label>
-                <input className='input__field'
+                <input className={`input__field ${values.name_error !== ' ' && 'input__field_error'}`}
                     name='name'
                     id='name-input'
                     type="text"
@@ -50,7 +50,7 @@ function Register({ onRegister, isRegistered, error }) {
             <span className='input__error'>{values.name_error}</span>
             <div className='input input_no-border' >
                 <label className='input__label' htmlFor='email-input' >E-mail</label>
-                <input className='input__field'
+                <input className={`input__field ${(values.email_error !== ' ') && 'input__field_error'}`}
                     name='email'
                     id='email-input'
                     type="email"
@@ -62,7 +62,7 @@ function Register({ onRegister, isRegistered, error }) {
             <span className='input__error'>{values.email_error}</span>
             <div className='input' >
                 <label className='input__label' htmlFor='password-input' >Пароль</label>
-                <input className='input__field'
+                <input className={`input__field ${values.password_error !== ' ' ? 'input__field_error' : ''}`}
                     name='password'
                     id='password-input'
                     type="password"

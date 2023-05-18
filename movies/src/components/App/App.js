@@ -47,8 +47,10 @@ const App = () => {
   }
 
   const signupUser = useCallback(async ({ name, email, password }) => {
-    setLoading(true);
+
     try {
+      setMessage('');
+      setLoading(true);
       const data = await myMoviesApi.register({ name, email, password });
       if (data) {
         window.localStorage.setItem('name', data.name);
@@ -95,6 +97,7 @@ const App = () => {
 
   const signoutUser = useCallback(async () => {
     try {
+      setMessage('');
       const res = await myMoviesApi.logout();
       if (res) {
         setLoggedIn(false);
@@ -107,7 +110,7 @@ const App = () => {
       sendError("запрос на выход из аккаунта не выполнен: " + err);
     }
     finally {
-
+      setMessage('');
     }
 
   })
@@ -116,16 +119,13 @@ const App = () => {
 
     try {
       setLoading(true);
-      const jwt = document.cookie;
-      if (!jwt) {
-        throw new Error('no token');
-      }
-      const user = await myMoviesApi.checkToken(jwt);
+
+      const user = await myMoviesApi.checkToken();
       if (user) {
-        console.log('token exists');
+
         setLoggedIn(true);
         setCurrentUser(user);
-        setMessage('Вы успешно вошли')
+        setMessage('Вы успешно вошли');
 
       }
     } catch (err) {
@@ -133,7 +133,7 @@ const App = () => {
     } finally {
       setLoading(false)
     }
-  }, [loggedIn]);
+  }, []);
 
 
   const handleProfileChange = useCallback(async (data) => {
@@ -159,6 +159,7 @@ const App = () => {
 
   const setLikes = useCallback(() => {
     if (moviesPage) {
+
       setLoading(true);
       myMoviesApi.getMoviesData().then(data => {
         getSavedMovies(data);
@@ -279,7 +280,7 @@ const App = () => {
     cardsLayotAdjust(data);
     setSearchDone(searchDone + 1);
     window.localStorage.setItem('savedMoviesInitial', JSON.stringify(data));
-    // setLikes();
+
   })
 
 
@@ -437,6 +438,7 @@ const App = () => {
   }, [width])
 
   useEffect(() => {
+
     tokenCheck();
     setMessage('');
     sendError('');

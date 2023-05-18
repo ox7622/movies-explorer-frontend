@@ -5,9 +5,7 @@ import logo from '../../images/logo.png'
 import { useForm } from '../../hooks/useForm';
 
 function Login({ message, error, onLogin, isLoggedIn }) {
-    const location = useLocation();
-    const moviesPage = (location.pathname === '/movies');
-    const savedMoviesPage = (location.pathname === '/saved-movies');
+
     const { values, setValues, handleChange } = useForm({ email: '', password: '' });
 
     const handleLogin = (e) => {
@@ -29,7 +27,7 @@ function Login({ message, error, onLogin, isLoggedIn }) {
             buttonTitle="Войти"
             link="/signup"
             linkText="Регистрация"
-            text="Ещё не зарегистрированы?"
+            text="Ещё не зарегистрированы? "
             setButtonState={values.password_buttonState || values.email_buttonState}
             message={message}
             error={error}
@@ -37,7 +35,7 @@ function Login({ message, error, onLogin, isLoggedIn }) {
         >
             <div className='input input_no-border' >
                 <label className='input__label' htmlFor='email-input' >E-mail</label>
-                <input className='input__field'
+                <input className={`input__field ${values.email_error !== ' ' && 'input__field_error'}`}
                     name='email'
                     id='email-input'
                     type="email"
@@ -49,7 +47,7 @@ function Login({ message, error, onLogin, isLoggedIn }) {
             <span className='input__error'>{values.email_error}</span>
             <div className='input' >
                 <label className='input__label' htmlFor='password-input' >Пароль</label>
-                <input className='input__field'
+                <input className={`input__field ${values.password_error !== ' ' && 'input__field_error'}`}
                     name='password'
                     id='password-input'
                     type="password"
