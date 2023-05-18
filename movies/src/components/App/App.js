@@ -473,7 +473,7 @@ const App = () => {
       <UserContext.Provider value={currentUser}>
         <SavedMoviesContext.Provider value={savedMovies}>
           {isLoading && <Preloader />}
-          <Header />
+          <Header loggedIn={loggedIn} />
           <main>
             <Routes>
 

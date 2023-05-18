@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './Header.css';
 import { Link, useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
-function Header() {
+function Header({ loggedIn }) {
     const location = useLocation();
     const mainPage = (location.pathname === '/');
     const notFoundPage = (location.pathname === '/404');
@@ -27,11 +27,11 @@ function Header() {
                         {!mainPage &&
                             (<button className="header__burger-menu hover-opacity hover-button" type='button' onClick={handleNavOpen} />)}
                         <ul className={`header__links ${mainPage ? "" : "header__links_desktop"}`}>
-                            {(moviesPage || savedMoviesPage || profilePage) &&
+                            {(moviesPage || savedMoviesPage || profilePage || (mainPage && loggedIn)) &&
                                 (<><li><Link to={'/movies'} className={`link header__link hover-link hover-opacity ${moviesPage && "link_selected"}`}>Фильмы</Link></li>
                                     <li><Link to={'/saved-movies'} className={`link header__link header__link_saved-films hover-link hover-opacity ${savedMoviesPage && "link_selected"}`}>Сохраненные фильмы</Link></li>
                                     <li><Link to={'/profile'} className={`link header__link  header__link_account hover-button ${profilePage && "link_selected"}`}>Аккаунт</Link></li></>)}
-                            {mainPage &&
+                            {(mainPage && loggedIn === false) &&
                                 (<><li><Link to={'/signup'} className="link header__link hover-link hover-opacity">Регистрация</Link></li>
                                     <li><Link to={'/signin'} className="link header__link header__link_signin hover-button">Войти</Link></li></>)}
                         </ul>
