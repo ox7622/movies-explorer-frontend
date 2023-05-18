@@ -1,4 +1,3 @@
-
 import './App.css';
 import { UserContext } from '../../contexts/User';
 import Main from '../Main/Main';
@@ -81,7 +80,6 @@ const App = () => {
           setLoggedIn(true);
           setMessage(data.message);
         }
-
       }
 
     }
@@ -135,16 +133,7 @@ const App = () => {
     } finally {
       setLoading(false)
     }
-  }, []);
-
-  useEffect(() => {
-    tokenCheck();
-    setMessage('');
-    sendError('');
-    getInitialMovies();
-    getSavedMoviesData();
-
-  }, []);
+  }, [loggedIn]);
 
 
   const handleProfileChange = useCallback(async (data) => {
@@ -198,6 +187,7 @@ const App = () => {
   const handleSearchMovies = useCallback(async function (input) {
 
     try {
+      sendError('');
       setLoading(true);
       setClick(1);
       let data = [];
@@ -241,7 +231,7 @@ const App = () => {
   const handleSearchSaved = useCallback(async function (input) {
 
     try {
-
+      sendError('');
       setLoading(true);
       setClick(1);
       let data = await myMoviesApi.getMoviesData();
@@ -272,7 +262,7 @@ const App = () => {
 
     let data = movies;
     const moviesAll = JSON.parse(window.localStorage.getItem('moviesSearched'));
-
+    sendError('');
     if (checked) {
       data = moviesAll;
       setChecked(false);
@@ -300,7 +290,7 @@ const App = () => {
     let data = savedMovies;
 
     const moviesAll = JSON.parse(window.localStorage.getItem('savedMovies'));
-
+    sendError('');
     if (checked) {
       data = moviesAll;
       setChecked(false);
@@ -328,9 +318,7 @@ const App = () => {
       if (likeStatus) {
         const deletedMovie = await myMoviesApi.deleteMovie(movie._id);
         if (deletedMovie) {
-
           getSavedMovies(savedMovies.filter(item => item._id !== movie._id));
-
           movie.isLiked = false;
           getMovies(movies);
 
@@ -340,9 +328,10 @@ const App = () => {
         const savedMovie = await myMoviesApi.createMovie({ imageURL: 'https://api.nomoreparties.co' + movie.image.url, thumbnail: 'https://api.nomoreparties.co' + movie.image.formats.thumbnail.url, ...movie });
         if (savedMovie) {
           getSavedMovies([savedMovie, ...savedMovies]);
-
+          movie._id = savedMovie._id;
           movie.isLiked = true;
           getMovies(movies);
+
         }
       }
 
@@ -371,7 +360,6 @@ const App = () => {
     if (input) {
 
       setInputText(input);
-
       setChecked(checkedStatus);
       getMovies(moviesInitial);
       cardsLayotAdjust(moviesInitial);
@@ -382,12 +370,7 @@ const App = () => {
       window.localStorage.setItem('savedMovies', JSON.stringify(data));
       getSavedMovies([...data]);
 
-    }).catch((err) => sendError("запрос на получение сохраненных фильмов не выполнен: " + err));
-
-
-  }, [loggedIn])
-
-  const getSavedMoviesData = useCallback(() => {
+    }).catch((err) => sendError("Вы не авторизованы. скорее заходите на сайт!"));
 
 
   }, [loggedIn])
@@ -453,7 +436,13 @@ const App = () => {
 
   }, [width])
 
+  useEffect(() => {
+    tokenCheck();
+    setMessage('');
+    sendError('');
+    getInitialMovies();
 
+  }, []);
 
   return (
     <div className='app'>
