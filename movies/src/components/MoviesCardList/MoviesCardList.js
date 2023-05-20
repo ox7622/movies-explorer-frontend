@@ -17,7 +17,7 @@ const MoviesCardList = ({ movies, moviesLimit, savedMovies, handleLikeClick, han
                 && (<p className=''>Ничего не найдено</p>)}
 
             {(<>
-                <p className=''>Найдено фильмов -  {(savedMoviesPage ? savedMovies.length : movies.length)}</p>
+                {/* <p className=''>Найдено фильмов -  {(savedMoviesPage ? savedMovies.length : movies.length)}</p> */}
                 <ul className='movie-cards__list' >
                     {(savedMoviesPage ? savedMovies : moviesLimit).map(item => (<MoviesCard key={`${moviesPage ? item.id : item._id}`} movie={item} handleLikeClick={handleLikeClick} />))}
                 </ul></>)}
