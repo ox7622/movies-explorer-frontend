@@ -4,7 +4,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import logo from '../../images/logo.png'
 
-function Register({ onRegister, isRegistered, error }) {
+function Register({ onRegister, isRegistered, error, isLoggedIn }) {
 
 
     const { values, handleChange } = useForm({ name: '', email: '', password: '' });
@@ -20,6 +20,10 @@ function Register({ onRegister, isRegistered, error }) {
 
     if (isRegistered) {
         return <Navigate to="/signin" replace />
+    }
+    if (isLoggedIn) {
+
+        return <Navigate to='/movies' replace />
     }
 
 

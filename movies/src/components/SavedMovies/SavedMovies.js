@@ -12,6 +12,7 @@ function SavedMovies({
     onShortSwitch,
     error,
     handleLikeClick,
+    checkedSaved
 }) {
 
 
@@ -21,6 +22,7 @@ function SavedMovies({
             onSubmit={onMoviesSearch}
             onSwitch={onShortSwitch}
             error={error}
+            checkedSaved={checkedSaved}
         />
         <MoviesCardList
             movies={movies}

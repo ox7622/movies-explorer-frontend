@@ -4,32 +4,27 @@ import './Profile.css';
 import { useForm } from '../../hooks/useForm';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../contexts/User';
-import { useLocation } from 'react-router-dom';
-function Profile({ onSubmit, message, error, onLogout }) {
+
+function Profile({ onSubmit, message, setMessage, error, onLogout }) {
 
 
     const user = useContext(UserContext);
-    const location = useLocation();
-    const profilePage = (location.pathname === '/profile');
-
     const { values, setValues, handleChange } = useForm({ name: user.name, email: user.email });
-    // const [equal, setEqual] = useState(true);
-    // useEffect(() => {
+    const [equal, setEqual] = useState(true);
+    useEffect(() => {
 
-    //     if ((values.name === user.name) || (values.email === user.email)) {
-    //         setEqual(false);
-    //     } else {
-    //         setEqual(true);
-    //     }
-    // }, [values]);
+        setEqual(((values.name === user.name) && (values.email === user.email)))
+        setMessage('');
+
+    }, [values]);
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
         onSubmit({ name: values.name, email: values.email });
     }
-
+    //
     return (<section className='section profile'>
         <FormTemplate
             title={`Привет, ${user.name}!`}
@@ -38,10 +33,10 @@ function Profile({ onSubmit, message, error, onLogout }) {
             link="/signin"
             linkText="Выйти из аккаунта"
             text=""
-            setButtonState={values.name_buttonState || values.email_buttonState || values.changed !== true}
+            setButtonState={values.name_buttonState || values.email_buttonState || values.changed !== true || equal}
             onSubmit={handleSubmit}
             error={error}
-            message={message}
+            message={message || ''}
             onLogout={onLogout} >
             <div className='profile-input' >
                 <label className='profile-input__label' htmlFor='name-input' >Имя</label>
@@ -55,7 +50,7 @@ function Profile({ onSubmit, message, error, onLogout }) {
                     minLength={2}
                     maxLength={30}
                     onChange={handleChange} /></div>
-            <span className='input__error'>{values.name_error}</span>
+            <span className='input__error input__error_type_profile'>{values.name_error}</span>
             <div className='profile-input profile-input_no-border' >
                 <label className='profile-input__label' htmlFor='email-input' >E-mail</label>
                 <input className='profile__input'
@@ -67,7 +62,7 @@ function Profile({ onSubmit, message, error, onLogout }) {
                     onChange={handleChange}
                     required
                 /></div>
-            <span className='input__error'>{values.email_error}</span>
+            <span className='input__error input__error_type_profile'>{values.email_error}</span>
         </FormTemplate>
 
 

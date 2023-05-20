@@ -1,7 +1,7 @@
 import './SearchForm.css';
 import { useLocation } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
-function SearchForm({ onSubmit, onSwitch, checked, input, error }) {
+function SearchForm({ onSubmit, onSwitch, checked, checkedSaved, input, error }) {
 
     const { values, handleChange, setValues } = useForm({ search: '' });
     const location = useLocation();
@@ -29,9 +29,9 @@ function SearchForm({ onSubmit, onSwitch, checked, input, error }) {
                 name="search"
                 id="search-input"
                 required
-                placeholder="Поиск фильмов по стране, названию и режиссеру"
+                placeholder="Поиск фильмов названию"
                 onChange={handleChange}
-                minLength="2"
+                minLength="1"
                 value={(moviesPage ? (values.changed ? values.search : input) : values.search)}
             />
             <button type="submit" className={`search__button hover-button ${(values.search_buttonState || values.search === '') && 'search__button_disabled'}`} disabled={values.search_buttonState || values.search === ''} />
@@ -40,7 +40,7 @@ function SearchForm({ onSubmit, onSwitch, checked, input, error }) {
         </form>
         <div className='switch-block'>
             <label className="switch">
-                <input type="checkbox" className='switch__input' onChange={handleSwitch} checked={checked} />
+                <input type="checkbox" className='switch__input' onChange={handleSwitch} checked={(moviesPage ? checked : checkedSaved)} />
                 <span className="slider slider__round" onChange={handleSwitch}></span>
             </label>
             <p className='switch__text'>Короткометражки</p>

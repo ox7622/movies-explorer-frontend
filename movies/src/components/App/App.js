@@ -16,6 +16,7 @@ import { moviesApi } from '../../utils/MoviesApi';
 import { myMoviesApi } from '../../utils/MainApi';
 import { movieFilter, durationFilter } from '../../utils/Filter';
 import useViewport from '../../hooks/useViewport';
+import * as num from '../../constants/constants';
 
 const App = () => {
   const location = useLocation();
@@ -28,6 +29,7 @@ const App = () => {
   const { width } = useViewport();
   const [moviesLimit, setMoviesLimit] = useState([]);
 
+
   const [savedMovies, getSavedMovies] = useState([]);
   const [error, sendError] = useState('');
   const [click, setClick] = useState(1);
@@ -39,6 +41,7 @@ const App = () => {
   const [isLoading, setLoading] = useState(false);
 
   let [checked, setChecked] = useState(false);
+  const [checkedSaved, setCheckedSaved] = useState(false);
   const [inputText, setInputText] = useState('');
   const [regSuccess, setRegSuccess] = useState(false);
 
@@ -162,26 +165,26 @@ const App = () => {
 
       setLoading(true);
       myMoviesApi.getMoviesData().then(data => {
-        getSavedMovies(data);
-        //  setMoviesAll(data);
+
         getMovies(movies.map((movie) => {
 
-          if (savedMovies.filter(i => i.id === movie.id).length > 0) {
-            movie._id = savedMovies.filter(i => i.id === movie.id)[0]._id;
+          if (data.filter(i => i.id === movie.id).length > 0) {
+            movie._id = data.filter(i => i.id === movie.id)[0]._id;
             movie.isLiked = true;
 
           } else {
             movie.isLiked = false;
           }
           return movie;
-        }
-        ))
+        }));
+
         window.localStorage.setItem('savedMovies', JSON.stringify(data));
+
 
       });
       setLoading(false);
     }
-
+    return [movies, savedMovies];
   })
 
 
@@ -215,6 +218,7 @@ const App = () => {
       window.localStorage.setItem('input', input);
       window.localStorage.setItem('checked', JSON.stringify(false));
       window.localStorage.setItem('savedMoviesInitial', JSON.stringify(dataFiltered));
+
     }
     catch (err) {
       sendError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
@@ -240,7 +244,7 @@ const App = () => {
       input = input.search.toLowerCase();
 
 
-      setChecked(false);
+      setCheckedSaved(false);
       data = movieFilter(data, input);
 
       getSavedMovies(data);
@@ -278,7 +282,7 @@ const App = () => {
 
     getMovies(data);
     cardsLayotAdjust(data);
-    setSearchDone(searchDone + 1);
+    setSearchDone(prev => prev + 1);
     window.localStorage.setItem('savedMoviesInitial', JSON.stringify(data));
 
   })
@@ -292,28 +296,28 @@ const App = () => {
 
     const moviesAll = JSON.parse(window.localStorage.getItem('savedMovies'));
     sendError('');
-    if (checked) {
+    if (checkedSaved) {
       data = moviesAll;
-      setChecked(false);
+      setCheckedSaved(false);
 
     } else {
       data = durationFilter(savedMovies);
-      setChecked(true);
+      setCheckedSaved(true);
 
     }
-    window.localStorage.setItem('moviesShortFilterSaved', JSON.stringify(data));
+
     getSavedMovies(data);
-    setSearchDone(searchDone + 1);
+    setSearchDone(prev => prev + 1);
 
   })
 
 
 
   const handleLikeClick = useCallback(async (movie) => {
-    setLoading(true);
+
 
     try {
-
+      setLoading(true);
       const likeStatus = savedMovies.filter(i => i.id === movie.id).length > 0;
 
       if (likeStatus) {
@@ -321,7 +325,6 @@ const App = () => {
         if (deletedMovie) {
           getSavedMovies(savedMovies.filter(item => item._id !== movie._id));
           movie.isLiked = false;
-          getMovies(movies);
 
         }
 
@@ -331,7 +334,6 @@ const App = () => {
           getSavedMovies([savedMovie, ...savedMovies]);
           movie._id = savedMovie._id;
           movie.isLiked = true;
-          getMovies(movies);
 
         }
       }
@@ -342,8 +344,8 @@ const App = () => {
     }
 
     finally {
-      window.localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
-      //  window.localStorage.setItem('moviesData', JSON.stringify(movies));
+      getMovies(movies);
+
       setLoading(false);
     }
 
@@ -364,6 +366,7 @@ const App = () => {
       setChecked(checkedStatus);
       getMovies(moviesInitial);
       cardsLayotAdjust(moviesInitial);
+
     }
 
     myMoviesApi.getMoviesData().then(data => {
@@ -373,7 +376,6 @@ const App = () => {
 
     }).catch((err) => sendError("Вы не авторизованы. скорее заходите на сайт!"));
 
-
   }, [loggedIn])
 
 
@@ -381,24 +383,19 @@ const App = () => {
   const cardsLayotAdjust = useCallback((data) => {
     let dataLimit;
     if (click === 1) {
-      if (width > 1280) {
-        dataLimit = data.slice(0, 12);
-        // setMoviesLimit(data.slice(0, 12));
-      } else if (width < 1280 && width > 750) {
-        //  setMoviesLimit(data.slice(0, 8));
-        dataLimit = data.slice(0, 8);
+      if (width > num.WideScreenSize) {
+        dataLimit = data.slice(0, num.ThreeColumnsLayout);
+      } else if (width < num.WideScreenSize && width > num.TabletSize) {
+
+        dataLimit = data.slice(0, num.TwoColumnsLayout);
 
       } else {
-        dataLimit = data.slice(0, 5)
-        // setMoviesLimit(data.slice(0, 5));
+        dataLimit = data.slice(0, num.OneColumnLayout)
 
       }
-
     }
     else {
       let limit = JSON.parse(window.localStorage.getItem('moviesLimit'));
-
-      // setMoviesLimit(data.slice(0, limit.length));
       dataLimit = data.slice(0, limit.length);
     }
     setMoviesLimit(dataLimit);
@@ -406,10 +403,17 @@ const App = () => {
 
   });
 
+
+
   useEffect(() => {
-    setLikes();
+    const [moviesData, savedMoviesData] = setLikes();
+
+    window.localStorage.setItem('savedMoviesInitial', JSON.stringify(moviesData));
     window.localStorage.setItem('moviesLimit', JSON.stringify(moviesLimit));
+
   }, [moviesLimit])
+
+
 
 
   const handleMore = useCallback(() => {
@@ -417,9 +421,9 @@ const App = () => {
     let limit;
     const moviesLimit = JSON.parse(window.localStorage.getItem('moviesLimit'));
 
-    if (width > 1280) {
+    if (width > num.WideScreenSize) {
       limit = (movies.slice(0, moviesLimit.length + 3));
-    } else if (width < 1280 && width > 750) {
+    } else if (width < 1280 && width > num.TabletSize) {
       limit = (movies.slice(0, moviesLimit.length + 2));
     } else {
       limit = (movies.slice(0, moviesLimit.length + 1));
@@ -444,6 +448,7 @@ const App = () => {
     sendError('');
     getInitialMovies();
 
+
   }, []);
 
   return (
@@ -455,7 +460,7 @@ const App = () => {
           <Routes>
 
             <Route path='movies' element={
-              <RequireAuth redirectTo='/signin'>
+              <RequireAuth redirectTo='/'>
                 <Movies
                   movies={movies}
                   moviesLimit={moviesLimit}
@@ -472,7 +477,7 @@ const App = () => {
               </RequireAuth>
             } />
             <Route path='saved-movies' element={
-              <RequireAuth redirectTo='/signin'>
+              <RequireAuth redirectTo='/'>
                 <SavedMovies
                   savedMovies={savedMovies}
                   onMoviesSearch={handleSearchSaved}
@@ -480,17 +485,18 @@ const App = () => {
                   isSearchDone={searchDone}
                   onShortSwitch={handleDurationFilterSaved}
                   error={error}
+                  checkedSaved={checkedSaved}
 
                 />
               </RequireAuth>} />
             <Route path='profile' element={
-              <RequireAuth redirectTo='/signin'>
-                <Profile onSubmit={handleProfileChange} error={error} message={message} loggedIn={loggedIn} onLogout={signoutUser} />
+              <RequireAuth redirectTo='/'>
+                <Profile onSubmit={handleProfileChange} error={error} message={message} setMessage={setMessage} loggedIn={loggedIn} onLogout={signoutUser} />
               </RequireAuth>
             } />
             <Route path='/' element={<Main />} />
             <Route path='signin' element={<Login error={error} message={message} onLogin={signinUser} isLoggedIn={loggedIn} />} />
-            <Route path='signup' element={<Register onRegister={signupUser} error={error} isRegistered={regSuccess} />} />
+            <Route path='signup' element={<Register onRegister={signupUser} error={error} isRegistered={regSuccess} isLoggedIn={loggedIn} />} />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>
 

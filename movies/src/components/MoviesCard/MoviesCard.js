@@ -1,11 +1,11 @@
 import './MoviesCard.css';
-import { useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import useViewport from '../../hooks/useViewport';
 import { useLocation } from 'react-router-dom';
 
 
 
-function MoviesCard({ movie, handleLikeClick }) {
+const MoviesCard = memo(({ movie, handleLikeClick }) => {
     //findVideos();
     const [style, setStyle] = useState({});
     const [video, setVideo] = useState(false);
@@ -88,13 +88,14 @@ function MoviesCard({ movie, handleLikeClick }) {
                         <img className='video__media' src={`${moviesPage ? 'https://api.nomoreparties.co' + movie.image.url : movie.imageURL}`}
                             alt={`${moviesPage ? movie.image.alt : movie.nameRU}`} />
                     </a>
-                        <button className="video__button" aria-label="Запустить видео">
+                        {/* <button className="video__button" aria-label="Запустить видео">
                             <svg width="64" height="64" viewBox="0 0 64 64"
                                 fill="none" xmlns="http://www.w3.org/2000/svg" >
                                 <rect className="video__button-shape" width="64" height="64" rx="64" fill="#ECEBE8" />
                                 <path className="video__button-icon" d="M41 31.4999L26.75 39.7272L26.75 31.4999L26.75 23.2727L41 31.4999Z"
                                     fill="#242424" />
-                            </svg></button></>}
+                            </svg></button> */}
+                    </>}
 
             </div>
 
@@ -107,7 +108,8 @@ function MoviesCard({ movie, handleLikeClick }) {
             </div>
         </li >
     )
-}
+})
+
 
 
 export default MoviesCard;

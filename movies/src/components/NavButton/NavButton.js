@@ -1,8 +1,8 @@
 import "./NavButton.css"
-import { Link } from "react-router-dom";
+import { HashLink as Link } from 'react-router-hash-link';
 function NavButton() {
     return (
-        <Link to={"#about"} ><button className="nav-button hover-button" type="button" onClick={'#about'}>Узнать больше</button></Link>
+        <Link to={"#about"} ><button className="nav-button hover-button" type="button" >Узнать больше</button></Link>
     )
 }
 export default NavButton;

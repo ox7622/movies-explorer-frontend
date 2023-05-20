@@ -55,6 +55,11 @@
     margin: -10px 0 0 0;
 }
 
+.input__error_type_profile {
+    margin: 5px 0 0 0;
+    max-width: 410px;
+}
+
 .login-reg-form__logo {
     margin: 10vh 0 0 0;
 }

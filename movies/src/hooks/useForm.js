@@ -7,16 +7,24 @@ export function useForm(input) {
     let validationError;
     const [values, setValues] = useState(input);
     const handleChange = (e) => {
-        const { value, name, validationMessage } = e.target;
+        let { value, name, validationMessage } = e.target;
         if (e.target.name === 'name') {
-            //validationMessage = parseText(e.target.value);
 
             validationError = parseText(e.target.value);
 
         } else if (e.target.name === 'email') {
+
             validationError = parseEmail(e.target.value);
 
-        } else {
+        } else if (e.target.name === 'search') {
+            if (e.target.value === '') {
+                validationMessage = "Нужно ввести ключевое слово"
+                validationError = '';
+            } else {
+                validationError = '';
+            }
+        }
+        else {
             validationError = '';
         }
 
