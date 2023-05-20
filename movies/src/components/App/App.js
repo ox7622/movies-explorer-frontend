@@ -28,7 +28,7 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState({});
   const { width } = useViewport();
   const [moviesLimit, setMoviesLimit] = useState([]);
-
+  const [initialStatus, setInitialStatus] = useState(false);
 
   const [savedMovies, getSavedMovies] = useState([]);
   const [error, sendError] = useState('');
@@ -162,7 +162,7 @@ const App = () => {
 
   const setLikes = useCallback(() => {
     if (moviesPage) {
-
+      console.log("LIKES");
       setLoading(true);
       myMoviesApi.getMoviesData().then(data => {
 
@@ -184,7 +184,7 @@ const App = () => {
       });
       setLoading(false);
     }
-    return [movies, savedMovies];
+
   })
 
 
@@ -366,14 +366,15 @@ const App = () => {
       setChecked(checkedStatus);
       getMovies(moviesInitial);
       cardsLayotAdjust(moviesInitial);
-
+      console.log("moies init");
+      setInitialStatus(true);
     }
 
     myMoviesApi.getMoviesData().then(data => {
 
       window.localStorage.setItem('savedMovies', JSON.stringify(data));
       getSavedMovies([...data]);
-
+      console.log("saved moies init");
     }).catch((err) => sendError("Вы не авторизованы. скорее заходите на сайт!"));
 
   }, [loggedIn])
@@ -404,13 +405,10 @@ const App = () => {
   });
 
 
-
   useEffect(() => {
-    const [moviesData, savedMoviesData] = setLikes();
-
-    window.localStorage.setItem('savedMoviesInitial', JSON.stringify(moviesData));
+    setLikes();
     window.localStorage.setItem('moviesLimit', JSON.stringify(moviesLimit));
-
+    console.log(movies, savedMovies, 'movies2');
   }, [moviesLimit])
 
 
