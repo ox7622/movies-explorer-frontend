@@ -162,7 +162,7 @@ const App = () => {
 
   const setLikes = useCallback(() => {
     if (moviesPage) {
-      console.log("LIKES");
+
       setLoading(true);
       myMoviesApi.getMoviesData().then(data => {
 
@@ -366,7 +366,6 @@ const App = () => {
       setChecked(checkedStatus);
       getMovies(moviesInitial);
       cardsLayotAdjust(moviesInitial);
-      console.log("moies init");
       setInitialStatus(true);
     }
 
@@ -374,7 +373,6 @@ const App = () => {
 
       window.localStorage.setItem('savedMovies', JSON.stringify(data));
       getSavedMovies([...data]);
-      console.log("saved moies init");
     }).catch((err) => sendError("Вы не авторизованы. скорее заходите на сайт!"));
 
   }, [loggedIn])
@@ -408,7 +406,7 @@ const App = () => {
   useEffect(() => {
     setLikes();
     window.localStorage.setItem('moviesLimit', JSON.stringify(moviesLimit));
-    console.log(movies, savedMovies, 'movies2');
+
   }, [moviesLimit])
 
 
