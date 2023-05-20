@@ -24,9 +24,9 @@ function Header({ loggedIn }) {
                 (<header className={`section header ${mainPage && "header_promo"}`}>
                     <div className='header__block'>
                         <Link to={'/'}><img src={logo} className="header__logo hover-opacity" alt="лого проекта" /></Link>
-                        {!mainPage &&
-                            (<button className="header__burger-menu hover-opacity hover-button" type='button' onClick={handleNavOpen} />)}
-                        <ul className={`header__links ${mainPage ? "" : "header__links_desktop"}`}>
+
+                        <button className="header__burger-menu hover-opacity hover-button" type='button' onClick={handleNavOpen} />
+                        <ul className={"header__links header__links_desktop"}>
                             {(moviesPage || savedMoviesPage || profilePage || (mainPage && loggedIn)) &&
                                 (<><li><Link to={'/movies'} className={`link header__link hover-link hover-opacity ${moviesPage && "link_selected"}`}>Фильмы</Link></li>
                                     <li><Link to={'/saved-movies'} className={`link header__link header__link_saved-films hover-link hover-opacity ${savedMoviesPage && "link_selected"}`}>Сохраненные фильмы</Link></li>
