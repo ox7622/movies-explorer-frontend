@@ -1,29 +1,30 @@
-import FormTemplate from '../FormTemplate/FormTemplate';
+import FormTemplate from '../FormTemplate/FormTemplate.jsx';
 import './Register.css';
 import { Link, Navigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 import logo from '../../images/logo.png'
+import { useCallback } from 'react';
 
-function Register({ onRegister, isRegistered, error, isLoggedIn }) {
-
+function Register({ onRegister, isLoggedIn, message, error }) {
 
     const { values, handleChange } = useForm({ name: '', email: '', password: '' });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
-        onRegister({ name: values.name, email: values.email, password: values.password })
+
+
+        await onRegister({ name: values.name, email: values.email, password: values.password });
 
 
 
-    };
 
 
-    if (isRegistered) {
-        return <Navigate to="/signin" replace />
-    }
+    }, [onRegister, values.email, values.name, values.password]);
+
+
     if (isLoggedIn) {
 
-        return <Navigate to='/movies' replace />
+        return <Navigate to='/movies' />
     }
 
 
@@ -37,7 +38,9 @@ function Register({ onRegister, isRegistered, error, isLoggedIn }) {
             linkText="Войти"
             text="Уже зарегистрированы? "
             setButtonState={values.name_buttonState || values.password_buttonState || values.email_buttonState}
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+            error={error}
+        >
             <div className='input' >
                 <label className='input__label' htmlFor='name-input' >Имя</label>
                 <input className={`input__field ${values.name_error !== ' ' && 'input__field_error'}`}
@@ -71,13 +74,13 @@ function Register({ onRegister, isRegistered, error, isLoggedIn }) {
                     id='password-input'
                     type="password"
                     value={values.password}
-                    placeholder="Пароль"
+                    placeholder="Ваш пароль"
                     required
                     onChange={handleChange}
                     maxLength={30}
                     minLength={2}
                 /></div>
-            <span className='input__error'>{values.password_error || error}</span>
+            <span className='input__error'>{values.password_error || message}</span>
         </FormTemplate>
 
 

@@ -12,3 +12,11 @@ export function durationFilter(data) {
   return data;
 
 }
+
+export function ownerFilter(data, user) {
+  return data.filter(movie => movie.owner === user._id)
+}
+
+export function filterById(savedMovies, movie) {
+  return savedMovies.filter(item => item._id !== movie._id)
+}

@@ -1,24 +1,22 @@
 import './SearchForm.css';
-import { useLocation } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
-function SearchForm({ onSubmit, onSwitch, checked, checkedSaved, input, error }) {
+import { useCallback, useEffect, useState } from 'react';
 
-    const { values, handleChange, setValues } = useForm({ search: '' });
-    const location = useLocation();
-    const moviesPage = (location.pathname === '/movies');
+function SearchForm({ onSubmit, onSwitch, checked, input, moviesPage, error }) {
 
+    const { values, handleChange, setValues } = useForm({});
 
-    function handleSubmit(e) {
+    const [errorUpd, seterrorUpd] = useState(error);
+    const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
-        window.localStorage.setItem('input', '');
-        onSubmit({ search: values.search });
 
-    }
+        await onSubmit({ search: values.search });
 
-    function handleSwitch() {
-        onSwitch();
-    }
+    }, [onSubmit, values.search])
 
+    // useEffect(() => {
+    //     seterrorUpd('')
+    // }, [])
 
 
     return (<section className='section search-form'>
@@ -29,19 +27,20 @@ function SearchForm({ onSubmit, onSwitch, checked, checkedSaved, input, error })
                 name="search"
                 id="search-input"
                 required
-                placeholder="Поиск фильмов названию"
+                placeholder="Нужно ввести ключевое слово"
                 onChange={handleChange}
                 minLength="1"
                 value={(moviesPage ? (values.changed ? values.search : input) : values.search)}
             />
             <button type="submit" className={`search__button hover-button ${(values.search_buttonState || values.search === '') && 'search__button_disabled'}`} disabled={values.search_buttonState || values.search === ''} />
-            <span className="input-error">{values.search_error || error}</span>
+            <span className="input-error">{error}</span>
+            <span className="input-error">{values.search_error}</span>
 
         </form>
         <div className='switch-block'>
             <label className="switch">
-                <input type="checkbox" className='switch__input' onChange={handleSwitch} checked={(moviesPage ? checked : checkedSaved)} />
-                <span className="slider slider__round" onChange={handleSwitch}></span>
+                <input type="checkbox" className='switch__input' onChange={onSwitch} checked={checked} />
+                <span className="slider slider__round" onChange={onSwitch}></span>
             </label>
             <p className='switch__text'>Короткометражки</p>
         </div>

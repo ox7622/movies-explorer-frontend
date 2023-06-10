@@ -1,6 +1,6 @@
-import pic from '../../images/promo-pic.svg'
+import pic from '../../../images/promo-pic.svg'
 import "./Promo.css"
-import NavButton from "../NavButton/NavButton";
+import NavButton from "../../NavButton/NavButton.jsx";
 function Promo() {
 
     return (<>

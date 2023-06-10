@@ -1,21 +1,28 @@
 import FormTemplate from '../FormTemplate/FormTemplate';
 import './Login.css';
-import { Link, Navigate, useLocation, } from 'react-router-dom';
+import { Link, Navigate, } from 'react-router-dom';
 import logo from '../../images/logo.png'
 import { useForm } from '../../hooks/useForm';
+import { useEffect, useCallback, useState } from 'react';
 
-function Login({ message, error, onLogin, isLoggedIn }) {
+function Login({ message, onLogin, isLoggedIn, error }) {
 
-    const { values, setValues, handleChange } = useForm({ email: '', password: '' });
 
-    const handleLogin = (e) => {
+    const { values, handleChange } = useForm({ email: '', password: '' });
+
+    const handleLogin = useCallback(async (e) => {
         e.preventDefault();
-        onLogin(values);
-    }
+
+
+        await onLogin(values)
+
+
+    }, [onLogin, values]);
+
 
     if (isLoggedIn) {
 
-        return <Navigate to='/movies' replace />
+        return <Navigate to='/movies' />
     }
 
 

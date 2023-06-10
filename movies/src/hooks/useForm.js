@@ -16,13 +16,6 @@ export function useForm(input) {
 
             validationError = parseEmail(e.target.value);
 
-        } else if (e.target.name === 'search') {
-            if (e.target.value === '') {
-                validationMessage = "Нужно ввести ключевое слово"
-                validationError = '';
-            } else {
-                validationError = '';
-            }
         }
         else {
             validationError = '';

@@ -75,9 +75,6 @@
 
 }
 
-.movie-card__like svg path {
-    fill: var(--button-accent);
-}
 
 .movie-card__like_active {
     background-image: url('../../images/like-icon_active.svg');
@@ -94,4 +91,27 @@
     justify-self: flex-end;
     background-repeat: no-repeat;
     border: 0;
+}
+
+
+.movie-card__image {
+    width: 100%;
+    height: 203px;
+    object-fit: cover;
+    background-position: center center;
+}
+
+
+@media screen and (max-width: 960px) {
+    .movie-card__image {
+        height: 190px;
+    }
+
+}
+
+@media screen and (max-width: 568px) {
+    .movie-card__image {
+        height: 168px;
+    }
+
 }

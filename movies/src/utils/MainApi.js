@@ -8,7 +8,8 @@ class Api {
         if (res.ok) {
             return res.json();
         } else {
-            return Promise.reject(`Что-то пошло не так: ${res.status}`);
+            console.log(res);
+            return Promise.reject(`${res.status} ${res.statusText}`);
         }
     }
 
