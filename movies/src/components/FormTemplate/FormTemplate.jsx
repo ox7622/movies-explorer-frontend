@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom';
 import './FormTemplate.css';
-function FormTemplate({ name, onSubmit, setButtonState, buttonTitle, title, children, link, linkText, text, message, error, onLogout }) {
+function FormTemplate({ name, onSubmit, setButtonState, buttonTitle, title, children, link, linkText, text, message, error, onLogout, submitted }) {
     console.log(error, 'form');
-
+    console.log(message, 'form message');
     return (
         <form className='form' name={`${name}`} onSubmit={onSubmit} noValidate >
             <div className={`form__container form__container_type_${name}`}>
                 <h2 className={`form__title form__title_type_${name}`}>{title}</h2>
                 {children}
             </div>
-            <span className='form__message'>{message}</span>
-            <span className='form__error'>{error}</span>
+            {submitted ? <><span className='form__message'>{message}</span>
+                <span className='form__error'>{error}</span></> : ''}
+
             <div className='buttons'>
                 <button className={`form__submit ${setButtonState ?
                     "form__submit_disabled" : `form__submit_type_${name}`} hover-button`} disabled={setButtonState} type="submit">{buttonTitle}

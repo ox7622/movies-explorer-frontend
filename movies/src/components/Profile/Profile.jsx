@@ -6,8 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../contexts/User';
 import Header from '../Header/Header';
 
-function Profile({ onSubmit, message, setMessage, error, onLogout, loggedIn }) {
-
+function Profile({ onSubmit, message, error, onLogout, loggedIn, submitted, sendError, setMessage }) {
 
     const user = useContext(UserContext);
     const { values, handleChange } = useForm({ name: user.name, email: user.email });
@@ -15,9 +14,9 @@ function Profile({ onSubmit, message, setMessage, error, onLogout, loggedIn }) {
     useEffect(() => {
 
         setEqual(((values.name === user.name) && (values.email === user.email)))
-        //    setMessage('');
 
-    }, [setMessage, user.email, user.name, values]);
+
+    }, [user.email, user.name, values]);
 
     console.log(error, 'profile');
     const handleSubmit = (e) => {
@@ -25,7 +24,13 @@ function Profile({ onSubmit, message, setMessage, error, onLogout, loggedIn }) {
 
         onSubmit({ name: values.name, email: values.email });
     }
-    //
+
+    useEffect(() => {
+        sendError('');
+        setMessage('')
+
+    }, [])
+
     return (<>
         <Header loggedIn={loggedIn} />
         <main>
@@ -41,7 +46,8 @@ function Profile({ onSubmit, message, setMessage, error, onLogout, loggedIn }) {
                     onSubmit={handleSubmit}
                     error={error}
                     message={message}
-                    onLogout={onLogout} >
+                    onLogout={onLogout}
+                    submitted={submitted} >
                     <div className='profile-input' >
                         <label className='profile-input__label' htmlFor='name-input' >Имя</label>
                         <input className='profile__input'

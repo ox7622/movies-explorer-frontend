@@ -15,13 +15,14 @@ import Footer from '../Footer/Footer.jsx';
 import { moviesApi } from '../../utils/MoviesApi';
 import { myMoviesApi } from '../../utils/MainApi';
 import { ownerFilter, filterById, movieFilter, durationFilter } from '../../utils/Filter';
-import { clearErrors } from '../../utils/helpers';
+
 
 
 const App = () => {
 
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
 
@@ -44,7 +45,6 @@ const App = () => {
 
   const navigate = useNavigate();
 
-
   const signinUser = useCallback(async ({ email, password }) => {
 
     try {
@@ -55,6 +55,7 @@ const App = () => {
 
         const profile = await myMoviesApi.getProfileInfo();
         if (profile) {
+          setSubmitted(true);
           setCurrentUser(profile);
           setLoggedIn(true);
           console.log(data);
@@ -63,9 +64,13 @@ const App = () => {
       }
     }
     catch (err) {
+      setSubmitted(true);
       if (err === '401 Unauthorized') {
         sendError('Неправильное имя пользователя и/ или пароль - ' + err);
-      } else {
+      } else if (err === '429 Too Many Requests') {
+        sendError('Превышен лимит попыток (больше 100 запросов за 15 мин). Подожидите немного и попробуйте еще раз - ' + err);
+      }
+      else {
         sendError(err);
       }
 
@@ -80,7 +85,7 @@ const App = () => {
 
 
   const signupUser = useCallback(async ({ name, email, password }) => {
-
+    setSubmitted(true);
     try {
       setMessage('');
       setLoading(true);
@@ -89,6 +94,7 @@ const App = () => {
         window.localStorage.setItem('name', data.name);
         window.localStorage.setItem('email', data.email);
         signinUser({ email: data.email, password: password });
+
       }
 
     }
@@ -110,6 +116,7 @@ const App = () => {
     try {
       setMessage('');
       const res = await myMoviesApi.logout();
+      debugger;
       if (res) {
         setLoggedIn(false);
         window.localStorage.setItem('name', '');
@@ -129,7 +136,7 @@ const App = () => {
       sendError("запрос на выход из аккаунта не выполнен: " + err);
     }
     finally {
-      //  clearErrors(setMessage(), sendError());
+
     }
 
   }, [])
@@ -145,14 +152,15 @@ const App = () => {
         setLoggedIn(true);
         setCurrentUser(user);
         navigate({ replace: false });
-        setMessage('Вы успешно вошли');
+        //  setMessage('Вы успешно вошли');
 
       }
     } catch (err) {
       sendError(err);
     } finally {
       setLoading(false);
-      // clearErrors(setMessage(), sendError());
+      console.log('profile changed 5');
+
     }
   }, []);
 
@@ -184,7 +192,7 @@ const App = () => {
     }
     finally {
       setLoading(false);
-      // clearErrors(setMessage(), sendError());
+
     }
   }, [])
 
@@ -208,7 +216,6 @@ const App = () => {
     }
     finally {
       setLoading(false);
-
     }
 
   }, [currentUser]);
@@ -216,6 +223,7 @@ const App = () => {
 
 
   const handleProfileChange = useCallback(async (data) => {
+    setSubmitted(true);
     try {
       setLoading(true);
       const profile = await myMoviesApi.editProfileInfo(data);
@@ -231,7 +239,7 @@ const App = () => {
     }
     finally {
       setLoading(false);
-      clearErrors(setMessage(), sendError());
+
     }
   }, [])
 
@@ -239,7 +247,7 @@ const App = () => {
 
 
   const handleLikeClick = useCallback(async (movie) => {
-
+    setSubmitted(true);
     try {
 
       const newMovie = await myMoviesApi.createMovie({
@@ -264,7 +272,7 @@ const App = () => {
 
 
   const deleteMovie = useCallback(async (movie) => {
-
+    setSubmitted(true);
     try {
       const findMovie = savedMovies.find((i) => movie.id === i.id);
 
@@ -284,6 +292,7 @@ const App = () => {
 
 
   const handleDurationFilterSaved = useCallback(() => {
+    setSubmitted(true);
     setLoading(true);
     let data = savedMovies;
 
@@ -309,7 +318,7 @@ const App = () => {
 
 
   const handleSearchSaved = useCallback(async (input) => {
-
+    setSubmitted(true);
     setLoading(true);
 
     let data = savedMoviesAll;
@@ -343,6 +352,7 @@ const App = () => {
       setChecked(checkedStatus);
       setInitialMovies(moviesInitial);
       setLoading(false);
+
     }
 
   }, [])
@@ -350,7 +360,7 @@ const App = () => {
 
 
   const handleSearchMovies = useCallback(async (input) => {
-
+    setSubmitted(true);
     try {
 
       setLoading(true);
@@ -358,11 +368,11 @@ const App = () => {
       const data = await getMovies();
 
       setChecked(false);
-      //console.log(data, input);
+
       const dataFiltered = movieFilter(data, input);
 
       setInitialMovies(dataFiltered);
-      // console.log(dataFiltered);
+
       window.localStorage.setItem('moviesSearched', JSON.stringify(dataFiltered));
       setInputText(input);
       window.localStorage.setItem('input', input);
@@ -383,6 +393,7 @@ const App = () => {
 
 
   const handleDurationFilterMovies = useCallback(() => {
+    setSubmitted(true);
     setLoading(true);
     let data = initialMovies;
     const moviesAll = JSON.parse(window.localStorage.getItem('moviesSearched'));
@@ -409,22 +420,24 @@ const App = () => {
 
   useEffect(() => {
     tokenCheck();
-    clearErrors(setMessage(), sendError());
+    setMessage('');
+    sendError('');
+    console.log('profile changed1');
   }, [tokenCheck]);
 
 
   useEffect(() => {
-    clearErrors(setMessage(), sendError());
+
     setCheckedSaved(false);
     setSavedMovies(savedMoviesAll);
-
+    console.log('profile changeв2');
   }, [savedMoviesAll])
 
 
   useEffect(() => {
     if (currentUser) {
       getSavedMovies();
-      clearErrors(setMessage(), sendError());
+      console.log('profile changed 3');
     }
   }, [currentUser, getSavedMovies])
 
@@ -449,7 +462,11 @@ const App = () => {
                 loggedIn={loggedIn}
                 isLoading={isLoading}
                 searchDone={searchDone}
-                error={error} />
+                error={error}
+                submitted={submitted}
+                sendError={sendError}
+                setMessage={setMessage}
+              />
             </ProtectedRoute>} />
           <Route path='saved-movies' element={
             <ProtectedRoute loggedIn={loggedIn}>
@@ -463,7 +480,11 @@ const App = () => {
                 setChecked={setChecked}
                 isLoading={isLoading}
                 searchDone={searchDone}
-                error={error} />
+                error={error}
+                submitted={submitted}
+                sendError={sendError}
+                setMessage={setMessage}
+              />
             </ProtectedRoute>} />
           <Route path='profile' element={
             <ProtectedRoute loggedIn={loggedIn}>
@@ -473,11 +494,15 @@ const App = () => {
                 message={message}
                 loggedIn={loggedIn}
                 onLogout={signoutUser}
-                isLoading={isLoading} />
+                isLoading={isLoading}
+                submitted={submitted}
+                sendError={sendError}
+                setMessage={setMessage}
+              />
             </ProtectedRoute>} />
 
-          <Route path='signin' element={<Login error={error} message={message} onLogin={signinUser} isLoggedIn={loggedIn} />} />
-          <Route path='signup' element={<Register onRegister={signupUser} error={error} isLoggedIn={loggedIn} message={message} />} />
+          <Route path='signin' element={<Login error={error} message={message} onLogin={signinUser} isLoggedIn={loggedIn} submitted={submitted} />} />
+          <Route path='signup' element={<Register onRegister={signupUser} error={error} isLoggedIn={loggedIn} message={message} submitted={submitted} />} />
           <Route path='/' element={<Main loggedIn={loggedIn} />} />
           <Route path='*' element={<NotFoundPage />} />
 

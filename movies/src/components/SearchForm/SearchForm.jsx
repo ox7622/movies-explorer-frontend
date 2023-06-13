@@ -2,21 +2,16 @@ import './SearchForm.css';
 import { useForm } from '../../hooks/useForm';
 import { useCallback, useEffect, useState } from 'react';
 
-function SearchForm({ onSubmit, onSwitch, checked, input, moviesPage, error }) {
+function SearchForm({ onSubmit, onSwitch, checked, input, moviesPage, error, submitted }) {
 
     const { values, handleChange, setValues } = useForm({});
 
-    const [errorUpd, seterrorUpd] = useState(error);
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
 
         await onSubmit({ search: values.search });
 
     }, [onSubmit, values.search])
-
-    // useEffect(() => {
-    //     seterrorUpd('')
-    // }, [])
 
 
     return (<section className='section search-form'>
@@ -33,7 +28,7 @@ function SearchForm({ onSubmit, onSwitch, checked, input, moviesPage, error }) {
                 value={(moviesPage ? (values.changed ? values.search : input) : values.search)}
             />
             <button type="submit" className={`search__button hover-button ${(values.search_buttonState || values.search === '') && 'search__button_disabled'}`} disabled={values.search_buttonState || values.search === ''} />
-            <span className="input-error">{error}</span>
+            {submitted ? <span className="input-error">{error}</span> : ""}
             <span className="input-error">{values.search_error}</span>
 
         </form>

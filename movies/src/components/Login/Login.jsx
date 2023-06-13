@@ -5,17 +5,14 @@ import logo from '../../images/logo.png'
 import { useForm } from '../../hooks/useForm';
 import { useEffect, useCallback, useState } from 'react';
 
-function Login({ message, onLogin, isLoggedIn, error }) {
+function Login({ message, onLogin, isLoggedIn, error, submitted }) {
 
 
     const { values, handleChange } = useForm({ email: '', password: '' });
 
     const handleLogin = useCallback(async (e) => {
         e.preventDefault();
-
-
         await onLogin(values)
-
 
     }, [onLogin, values]);
 
@@ -38,6 +35,7 @@ function Login({ message, onLogin, isLoggedIn, error }) {
             setButtonState={values.password_buttonState || values.email_buttonState}
             message={message}
             error={error}
+            submitted={submitted}
             onSubmit={handleLogin}
         >
             <div className='input input_no-border' >

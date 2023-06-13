@@ -5,7 +5,7 @@ import { useForm } from '../../hooks/useForm';
 import logo from '../../images/logo.png'
 import { useCallback } from 'react';
 
-function Register({ onRegister, isLoggedIn, message, error }) {
+function Register({ onRegister, isLoggedIn, message, error, submitted }) {
 
     const { values, handleChange } = useForm({ name: '', email: '', password: '' });
 
@@ -40,6 +40,8 @@ function Register({ onRegister, isLoggedIn, message, error }) {
             setButtonState={values.name_buttonState || values.password_buttonState || values.email_buttonState}
             onSubmit={handleSubmit}
             error={error}
+            message={message}
+            submitted={submitted}
         >
             <div className='input' >
                 <label className='input__label' htmlFor='name-input' >Имя</label>
@@ -80,7 +82,7 @@ function Register({ onRegister, isLoggedIn, message, error }) {
                     maxLength={30}
                     minLength={2}
                 /></div>
-            <span className='input__error'>{values.password_error || message}</span>
+            <span className='input__error'>{values.password_error}</span>
         </FormTemplate>
 
 

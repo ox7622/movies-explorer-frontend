@@ -4,23 +4,27 @@ import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm.jsx'
 import Preloader from '../Preloader/Preloader.jsx';
 import Header from '../Header/Header.jsx';
-
+import { useEffect } from 'react';
 function SavedMovies({
     movies,
     searchSaved,
     durationFilterSaved,
-    isSearchDone,
-    onShortSwitch,
     error,
     handleDeleteLike,
     checked,
-    setChecked,
     loggedIn,
     isLoading,
-    searchDone
+    searchDone,
+    submitted,
+    sendError,
+    setMessage
 }) {
 
+    useEffect(() => {
+        sendError('');
+        setMessage('')
 
+    }, [])
 
     return (<>
         <Header loggedIn={loggedIn} />
@@ -31,9 +35,9 @@ function SavedMovies({
                 error={error}
                 checked={checked}
                 moviesPage={false}
+                submitted={submitted}
             />
             {isLoading ? <Preloader /> : <MoviesCardList
-                // movies={JSON.parse(movies)}
                 movies={movies}
                 moviesPage={false}
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList.jsx';
 import SearchForm from '../SearchForm/SearchForm.jsx';
 import './Movies.css';
@@ -17,10 +17,17 @@ const Movies = ({
     input,
     handleSearchMovies,
     handleDurationFilterMovies,
-    error
+    error,
+    submitted,
+    sendError,
+    setMessage
 }) => {
 
+    useEffect(() => {
+        sendError('');
+        setMessage('')
 
+    }, [])
 
     return (<>
         <Header loggedIn={loggedIn} />
@@ -31,6 +38,7 @@ const Movies = ({
                 input={input}
                 moviesPage={true}
                 error={error}
+                submitted={submitted}
             />
 
             {isLoading ? <Preloader /> : <MoviesCardList
