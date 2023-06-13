@@ -5,6 +5,25 @@
     position: relative;
 }
 
+.nav-div {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    position: relative;
+}
+
+.nav-div_open {
+    visibility: visible;
+    height: 100vh;
+    width: 100vw;
+    z-index: 9;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, .4);
+
+}
+
 .nav_open {
     visibility: visible;
     height: 100vh;
@@ -13,6 +32,7 @@
     right: 0;
     top: 0;
     background-color: white;
+    overflow: hidden;
 }
 
 .nav_desktop {

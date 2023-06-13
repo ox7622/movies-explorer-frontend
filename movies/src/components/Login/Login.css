@@ -33,6 +33,10 @@
     padding: 0 10px;
 }
 
+.input__field_error {
+    color: var(--text-error);
+}
+
 .input__field:focus {
     outline-color: var(--button-accent);
 }
@@ -49,6 +53,11 @@
     color: var(--text-error);
     font-size: 10px;
     margin: -10px 0 0 0;
+}
+
+.input__error_type_profile {
+    margin: 5px 0 0 0;
+    max-width: 410px;
 }
 
 .login-reg-form__logo {
