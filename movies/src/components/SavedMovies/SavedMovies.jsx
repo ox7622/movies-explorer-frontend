@@ -5,8 +5,9 @@ import SearchForm from '../SearchForm/SearchForm.jsx'
 import Preloader from '../Preloader/Preloader.jsx';
 import Header from '../Header/Header.jsx';
 import { useEffect } from 'react';
+
 function SavedMovies({
-    movies,
+ //   movies,
     searchSaved,
     durationFilterSaved,
     error,
@@ -19,6 +20,9 @@ function SavedMovies({
     sendError,
     setMessage
 }) {
+
+
+
 
     useEffect(() => {
         sendError('');
@@ -38,10 +42,10 @@ function SavedMovies({
                 submitted={submitted}
             />
             {isLoading ? <Preloader /> : <MoviesCardList
-                movies={movies}
-                moviesPage={false}
+                //movies={savedMovies}
+                //moviesPage={false}
 
-                isSearchDone={searchDone}
+                //isSearchDone={searchDone}
                 handleDeleteLike={handleDeleteLike}
             />}
         </main>

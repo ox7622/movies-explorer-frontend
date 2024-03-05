@@ -1,12 +1,22 @@
 import './MoviesCard.css';
 import { memo, useCallback, useEffect, useState } from 'react';
 import useViewport from '../../hooks/useViewport';
+import MovieImage from '../MovieImage/MovieImage';
+import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLike, deleteLike } from '../../store/moviesSlice';
 
-
-const MoviesCard = memo(({ movie, handleSetLike, handleDeleteLike, savedMovies, moviesPage, image, alt }) => {
+const MoviesCard = memo(({ movie, handleSetLike, handleDeleteLike,   image, alt }) => {
 
     const [style, setStyle] = useState({});
     const [isLiked, setIsLiked] = useState(false);
+
+    const location = useLocation();
+    const moviesPage = (location.pathname === '/movies');
+
+    const savedMovies =  useSelector(state=> state.movies.savedMovies)
+
+    const dispatch = useDispatch();
 
     const { width } = useViewport();
     const isMobile = width <= 500;
@@ -37,9 +47,11 @@ const MoviesCard = memo(({ movie, handleSetLike, handleDeleteLike, savedMovies, 
     const handleDelete = useCallback(async (e) => {
 
         // console.log(movie);
-        await handleDeleteLike(movie);
+        const findMovie = savedMovies.find((i) => movie.id === i.id);
+        console.log(findMovie);
+        dispatch(deleteLike(findMovie));
         setIsLiked(false);
-    }, [handleDeleteLike, movie])
+    }, [dispatch, movie.id, savedMovies])
 
 
     const handleLike = useCallback(async () => {
@@ -48,14 +60,14 @@ const MoviesCard = memo(({ movie, handleSetLike, handleDeleteLike, savedMovies, 
         ;
         if (isLiked) {
 
-            await handleDelete();
+            handleDelete();
         } else {
             setIsLiked(true);
 
-            await handleSetLike(movie);
+            dispatch(setLike(movie));
         }
 
-    }, [handleDelete, handleSetLike, isLiked, movie]);
+    }, [dispatch, handleDelete, isLiked, movie]);
 
 
     const duration = useCallback((num) => {
@@ -94,8 +106,9 @@ const MoviesCard = memo(({ movie, handleSetLike, handleDeleteLike, savedMovies, 
 
     return (
         <li className='movie-card' onMouseEnter={e => setStyle({ display: "block" })} onMouseLeave={e => setStyle({ display: displayProp })} >
-            <a className="movie-card__link" href={movie.trailerLink} target='_blank' rel="noreferrer"  >
-                <img className='movie-card__image' src={image} alt={alt} /></a>
+            {/* <a className="movie-card__link" href={movie.trailerLink} target='_blank' rel="noreferrer"  >
+                <img className='movie-card__image' src={image} alt={alt} /></a> */}
+            <MovieImage movie={movie} />
 
             <div className='movie-card__content'>
                 <p className='movie-card__title'>{movie.nameRU}</p>

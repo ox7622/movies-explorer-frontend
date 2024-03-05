@@ -3,11 +3,21 @@ import { useEffect, useState, useCallback } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard.jsx';
 import useViewport from '../../hooks/useViewport';
 import * as num from '../../constants/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMovies, searchMovies } from '../../store/moviesSlice.js';
+import { useLocation } from 'react-router-dom';
 
-const MoviesCardList = ({ movies, handleSetLike, handleDeleteLike, moviesPage, isSearchDone, savedMovies }) => {
+const MoviesCardList = ({ handleSetLike, handleDeleteLike,  }) => {
+
+    const movies = useSelector(state => state.movies.movies) || [];
+    const savedMovies =  useSelector(state => state.movies.savedMovies) || []
+    const isSearchDone = useSelector(state => state.movies.searchDone)
+    const dispatch = useDispatch()
 
     const { width } = useViewport();
     const [cardLimit, setCardLimit] = useState(0);
+    const location = useLocation();
+    const moviesPage = (location.pathname === '/movies');
 
 
     useEffect(() => {
@@ -45,7 +55,9 @@ const MoviesCardList = ({ movies, handleSetLike, handleDeleteLike, moviesPage, i
 
     }, [cardLimit, width]);
 
-
+    useEffect(() => {
+        dispatch(fetchMovies());
+    }, [dispatch])
 
 
     return (
@@ -55,8 +67,7 @@ const MoviesCardList = ({ movies, handleSetLike, handleDeleteLike, moviesPage, i
             {(isSearchDone > 0 && (movies === undefined || movies.length === 0))
                 && (<p className=''>Ничего не найдено</p>)}
 
-            {/* 
-            {movies.length > 0 && <p className=''>Найдено фильмов -  {movies.length}</p>} */}
+            {movies.length > 0 && <p className=''>Найдено фильмов -  {movies.length}</p>}
 
             <ul className='movie-cards__list' >
                 {moviesPage ?
@@ -66,19 +77,19 @@ const MoviesCardList = ({ movies, handleSetLike, handleDeleteLike, moviesPage, i
                             movie={item}
                             alt={item.image.alt}
                             image={`https://api.nomoreparties.co/${item.image.url}`}
-                            handleSetLike={handleSetLike}
-                            handleDeleteLike={handleDeleteLike}
-                            savedMovies={savedMovies}
-                            moviesPage={moviesPage}
+                        //   handleSetLike={handleSetLike}
+                        // handleDeleteLike={handleDeleteLike}
+                        // savedMovies={savedMovies}
+                        //moviesPage={moviesPage}
                         />))
-                    : (movies.map(item =>
+                    : (savedMovies.map(item =>
                         <MoviesCard
                             key={item.id}
                             movie={item}
                             alt={item.nameRU}
                             image={item.imageURL}
-                            handleDeleteLike={handleDeleteLike}
-                            moviesPage={moviesPage}
+                           // handleDeleteLike={handleDeleteLike}
+                        //moviesPage={moviesPage}
                         />))
                 }
             </ul>

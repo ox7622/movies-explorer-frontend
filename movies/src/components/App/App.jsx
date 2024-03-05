@@ -14,12 +14,16 @@ import NotFoundPage from '../NotFoundPage/NotFoundPage.jsx';
 import Footer from '../Footer/Footer.jsx';
 import { moviesApi } from '../../utils/MoviesApi';
 import { myMoviesApi } from '../../utils/MainApi';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchMovies } from '../../store/moviesSlice.js';
+
 import { ownerFilter, filterById, movieFilter, durationFilter } from '../../utils/Filter';
 
 
 
 const App = () => {
 
+  const dispatch = useDispatch();
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -39,16 +43,16 @@ const App = () => {
   let [searchDone, setSearchDone] = useState(0);
 
 
-  const [checked, setChecked] = useState(false);
-  const [checkedSaved, setCheckedSaved] = useState(false);
-  const [input, setInputText] = useState('');
+  // const [checked, setChecked] = useState(false);
+  // const [checkedSaved, setCheckedSaved] = useState(false);
+  // const [input, setInputText] = useState('');
 
   const navigate = useNavigate();
 
   const signinUser = useCallback(async ({ email, password }) => {
-
+    console.log(email, password);
     try {
-
+      console.log(email, password);
       setLoading(true);
       const data = await myMoviesApi.login({ email, password });
       if (data) {
@@ -167,33 +171,35 @@ const App = () => {
 
 
   const getMovies = useCallback(async () => {
+    // // 
 
-    try {
-      setLoading(true);
-      const prevSearch = window.localStorage.getItem('moviesData');
 
-      let data = [];
+    //     try {
+    //       setLoading(true);
+    //       const prevSearch = window.localStorage.getItem('moviesData');
 
-      if (prevSearch) {
-        data = JSON.parse(prevSearch);
-      }
-      else {
-        data = await moviesApi.getMoviesData();
-        if (data) {
-          window.localStorage.setItem('moviesData', JSON.stringify(data));
-        }
-      }
+    //       let data = [];
 
-      return data;
+    //       if (prevSearch) {
+    //         data = JSON.parse(prevSearch);
+    //       }
+    //       else {
+    //         data = await moviesApi.getMoviesData();
+    //         if (data) {
+    //           window.localStorage.setItem('moviesData', JSON.stringify(data));
+    //         }
+    //       }
 
-    }
-    catch (err) {
-      sendError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
-    }
-    finally {
-      setLoading(false);
+    //       return data;
 
-    }
+    //     }
+    //     catch (err) {
+    //       sendError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+    //     }
+    //     finally {
+    //       setLoading(false);
+
+    //     }
   }, [])
 
 
@@ -260,7 +266,7 @@ const App = () => {
       setSavedMoviesAll(movieUpd);
       window.localStorage.setItem('savedMovies', JSON.stringify(movieUpd));
 
-      setCheckedSaved(false)
+      //setCheckedSaved(false)
     }
     catch (err) {
       sendError("Ошибка при отправке лайка " + err);
@@ -292,27 +298,27 @@ const App = () => {
 
 
   const handleDurationFilterSaved = useCallback(() => {
-    setSubmitted(true);
-    setLoading(true);
-    let data = savedMovies;
+  //   setSubmitted(true);
+  //   setLoading(true);
+  //   let data = savedMovies;
 
-    const moviesAll = savedMoviesAll;
+  //   const moviesAll = savedMoviesAll;
 
-    if (checkedSaved) {
-      data = moviesAll;
-      setCheckedSaved(false);
+  //   if (checkedSaved) {
+  //     data = moviesAll;
+  //  //   setCheckedSaved(false);
 
-    } else {
-      data = durationFilter(savedMovies);
-      setCheckedSaved(true);
+  //   } else {
+  //     data = durationFilter(savedMovies);
+  //  //   setCheckedSaved(true);
 
-    }
+  //   }
 
-    setSavedMovies(data);
-    setLoading(false);
-    setSearchDone(prev => prev + 1);
+  //   setSavedMovies(data);
+  //   setLoading(false);
+  //   setSearchDone(prev => prev + 1);
 
-  }, [checkedSaved, savedMovies, savedMoviesAll])
+  }, [])
 
 
 
@@ -326,7 +332,7 @@ const App = () => {
     input = input.search.toLowerCase();
 
 
-    setCheckedSaved(false);
+   // setCheckedSaved(false);
     data = movieFilter(data, input);
 
     setSavedMovies(data);
@@ -348,8 +354,8 @@ const App = () => {
       const checkedStatus = JSON.parse(window.localStorage.getItem('checked'));
       const moviesInitial = JSON.parse(window.localStorage.getItem('savedMoviesInitial'));
 
-      setInputText(inputText);
-      setChecked(checkedStatus);
+    //  setInputText(inputText);
+    //  setChecked(checkedStatus);
       setInitialMovies(moviesInitial);
       setLoading(false);
 
@@ -360,32 +366,33 @@ const App = () => {
 
 
   const handleSearchMovies = useCallback(async (input) => {
-    setSubmitted(true);
-    try {
+    // setSubmitted(true);
+    // try {
 
-      setLoading(true);
-      input = input.search.toLowerCase();
-      const data = await getMovies();
+    //   setLoading(true);
+    //   input = input.search.toLowerCase();
+    //   const data =dispatch(fetchMovies());
+    //   //const data = await getMovies();
 
-      setChecked(false);
+    //   setChecked(false);
 
-      const dataFiltered = movieFilter(data, input);
+    //   const dataFiltered = movieFilter(data, input);
 
-      setInitialMovies(dataFiltered);
+    //   setInitialMovies(dataFiltered);
 
-      window.localStorage.setItem('moviesSearched', JSON.stringify(dataFiltered));
-      setInputText(input);
-      window.localStorage.setItem('input', input);
-      window.localStorage.setItem('checked', JSON.stringify(false));
-      window.localStorage.setItem('savedMoviesInitial', JSON.stringify(dataFiltered));
-      setSearchDone(prev => prev + 1);
-    }
-    catch {
+    //   window.localStorage.setItem('moviesSearched', JSON.stringify(dataFiltered));
+    //   setInputText(input);
+    //   window.localStorage.setItem('input', input);
+    //   window.localStorage.setItem('checked', JSON.stringify(false));
+    //   window.localStorage.setItem('savedMoviesInitial', JSON.stringify(dataFiltered));
+    //   setSearchDone(prev => prev + 1);
+    // }
+    // catch {
 
-    }
-    finally {
-      setLoading(false);
-    }
+    // }
+    // finally {
+    //   setLoading(false);
+    // }
 
 
   }, [getMovies])
@@ -393,28 +400,28 @@ const App = () => {
 
 
   const handleDurationFilterMovies = useCallback(() => {
-    setSubmitted(true);
-    setLoading(true);
-    let data = initialMovies;
-    const moviesAll = JSON.parse(window.localStorage.getItem('moviesSearched'));
-    //   sendError('');
-    if (checked) {
-      data = moviesAll;
-      setChecked(false);
-      window.localStorage.setItem('checked', JSON.stringify(false));
-    } else {
-      data = durationFilter(initialMovies);
-      setChecked(true);
-      window.localStorage.setItem('checked', JSON.stringify(true));
+    // setSubmitted(true);
+    // setLoading(true);
+    // let data = initialMovies;
+    // const moviesAll = JSON.parse(window.localStorage.getItem('moviesSearched'));
+    // //   sendError('');
+    // if (checked) {
+    //   data = moviesAll;
+    //   setChecked(false);
+    //   window.localStorage.setItem('checked', JSON.stringify(false));
+    // } else {
+    //   data = durationFilter(initialMovies);
+    //   setChecked(true);
+    //   window.localStorage.setItem('checked', JSON.stringify(true));
 
-    }
-    window.localStorage.setItem('moviesShortFilter', JSON.stringify(data));
+    // }
+    // window.localStorage.setItem('moviesShortFilter', JSON.stringify(data));
 
-    setInitialMovies(data);
-    setSearchDone(prev => prev + 1);
-    window.localStorage.setItem('savedMoviesInitial', JSON.stringify(data));
-    setLoading(false);
-  }, [checked, initialMovies])
+    // setInitialMovies(data);
+    // setSearchDone(prev => prev + 1);
+    // window.localStorage.setItem('savedMoviesInitial', JSON.stringify(data));
+    // setLoading(false);
+  }, [])
 
 
 
@@ -428,7 +435,7 @@ const App = () => {
 
   useEffect(() => {
 
-    setCheckedSaved(false);
+   // setCheckedSaved(false);
     setSavedMovies(savedMoviesAll);
     console.log('profile changeв2');
   }, [savedMoviesAll])
@@ -451,9 +458,9 @@ const App = () => {
           <Route path='movies' element={
             <ProtectedRoute loggedIn={loggedIn}>
               <Movies
-                movies={initialMovies}
-                checked={checked}
-                input={input}
+                // movies={initialMovies}
+               // checked={checked}
+               // input={input}
                 savedMovies={savedMoviesAll}
                 handleDurationFilterMovies={handleDurationFilterMovies}
                 handleSearchMovies={handleSearchMovies}
@@ -476,8 +483,8 @@ const App = () => {
                 loggedIn={loggedIn}
                 durationFilterSaved={handleDurationFilterSaved}
                 searchSaved={handleSearchSaved}
-                checked={checkedSaved}
-                setChecked={setChecked}
+               // checked={checkedSaved}
+                //setChecked={setChecked}
                 isLoading={isLoading}
                 searchDone={searchDone}
                 error={error}

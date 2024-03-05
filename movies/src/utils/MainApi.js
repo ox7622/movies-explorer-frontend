@@ -82,7 +82,7 @@ class Api {
         return fetch(`${this.url}/users/me`, {
             method: 'GET',
             headers: this.headers,
-            credentials: 'include',
+             credentials: 'include',
         }).then(this._checkResponse);
 
     }
@@ -99,11 +99,12 @@ class Api {
 }
 
 export const myMoviesApi = new Api({
-    url: "https://api.mox.nomoredomains.work",
-    //url: 'http://localhost:3001',
+    // url: "https://api.mox.nomoredomains.work",
+    url: 'http://localhost:3002',
     headers: {
         "Content-Type": "application/json",
-        'Origin': 'https://mox.nomoredomains.work',
+        // 'Origin': 'https://mox.nomoredomains.work',
+        'Origin': 'http://localhost:3000',
         'Accept': 'application/json',
     }
 
